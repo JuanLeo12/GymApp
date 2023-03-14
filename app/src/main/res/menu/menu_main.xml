@@ -1,0 +1,86 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="pe.com.gymapp.ActividadPrincipal">
+    <item
+        android:id="@+id/jmiInicio"
+        android:title="Menu Principal" />
+    <item
+        android:id="@+id/jmiEmpleado"
+        android:title="Empleado" />
+    <item
+        android:id="@+id/jmiCliente"
+        android:title="Cliente" >
+        <menu >
+            <item
+                android:id="@+id/jmiRegistroCliente"
+                android:title="Registro" />
+            <item
+                android:id="@+id/jmiSeguimientoFisico"
+                android:title="Seguimiento Fisico" />
+            <item
+                android:id="@+id/jmiIncidencia"
+                android:title="Incidencia" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/jmiRol"
+        android:title="Rol" />
+    <item
+        android:id="@+id/jmiMembresia"
+        android:title="Membresia" />
+    <item
+        android:id="@+id/jmiProducto"
+        android:title="Producto" />
+    <item
+        android:id="@+id/jmiMaquina"
+        android:title="Maquina" >
+        <menu >
+            <item
+                android:id="@+id/jmiRegistroMaquina"
+                android:title="Registro" />
+            <item
+                android:id="@+id/jmiDiasMantenimiento"
+                android:title="Dias de Mantenimiento" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/jmiProveedor"
+        android:title="Proveedor" />
+    <item
+        android:id="@+id/jmiCompra"
+        android:title="Compra" >
+        <menu >
+            <item
+                android:id="@+id/jmiComprarProducto"
+                android:title="Comprar Producto" />
+            <item
+                android:id="@+id/jmiComprarMaquina"
+                android:title="ComprarMaquina" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/jmiVenta"
+        android:title="Venta" />
+    <item
+        android:id="@+id/jmiAsistencia"
+        android:title="Asistencia" >
+        <menu >
+            <item
+                android:id="@+id/jmiAsistenciaEmpleado"
+                android:title="Asistencia Empleado" />
+            <item
+                android:id="@+id/jmiAsistenciaCliente"
+                android:title="Asistencia Cliente" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/jmiUsuario"
+        android:title="Usuario" />
+    <item
+        android:id="@+id/jmiCerrarSesion"
+        android:title="Cerrar Sesion" />
+    <item
+        android:id="@+id/jmiSalir"
+        android:title="Salir" />
+</menu>
