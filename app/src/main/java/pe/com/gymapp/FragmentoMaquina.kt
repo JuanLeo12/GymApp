@@ -1,59 +1,174 @@
 package pe.com.gymapp
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
+import androidx.fragment.app.FragmentTransaction
+import pe.com.gymapp.adaptadores.AdaptadorMaquina
+import pe.com.gymapp.clases.Maquina
+import pe.com.gymapp.remoto.ApiUtil
+import pe.com.gymapp.servicios.MaquinaService
+import pe.com.gymapp.utilidad.Util
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentoMaquina.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FragmentoMaquina : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var txtNomMaq: EditText
+    private lateinit var txtPreComMaq: EditText
+    private lateinit var chkEstMaq: CheckBox
+    private lateinit var lblCodMaq: TextView
+    private lateinit var btnRegistrar: Button
+    private lateinit var btnActualizar: Button
+    private lateinit var btnEliminar: Button
+    private lateinit var lstMaq: ListView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    val objmaquina= Maquina()
+
+    private var cod=0
+    private var nom=""
+    private var precom=0.0
+    private var est=false
+    private var fila=-1
+
+    private var maquinaService: MaquinaService?=null
+
+    private var registromaquina:List<Maquina>?=null
+
+    var objutilidad= Util()
+
+    var ft: FragmentTransaction?=null
+
+    private var _binding: FragmentoMaquina? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragmento_maquina, container, false)
+
+        val raiz=inflater.inflate(R.layout.fragmento_maquina,container,false)
+        //creamos los controles
+        txtNomMaq=raiz.findViewById(R.id.txtNomMaq)
+        txtPreComMaq=raiz.findViewById(R.id.txtPreComMaq)
+        chkEstMaq=raiz.findViewById(R.id.chkEstMaq)
+        lblCodMaq=raiz.findViewById(R.id.lblCodMaq)
+        btnRegistrar=raiz.findViewById(R.id.btnRegistrar)
+        btnActualizar=raiz.findViewById(R.id.btnActualizar)
+        btnEliminar=raiz.findViewById(R.id.btnEliminar)
+        lstMaq=raiz.findViewById(R.id.lstMaq)
+
+        registromaquina=ArrayList()
+
+        //implementamos el servicio
+        maquinaService= ApiUtil.maquinaService
+
+        //mostramos las categorias
+        MostrarMaquina(raiz.context)
+
+        //agregamos los eventos
+        btnRegistrar.setOnClickListener {
+            if(txtNomMaq.getText().toString()==""||txtPreComMaq.getText().toString()==""){
+                objutilidad.MensajeToast(raiz.context,"Faltan Datos")
+                txtNomMaq.requestFocus()
+            }else{
+                //capturando valores
+                nom=txtNomMaq.getText().toString()
+                precom=txtPreComMaq.getText().toString().toDouble()
+                est=if(chkEstMaq.isChecked){
+                    true
+                }else{
+                    false
+                }
+                //enviamos los valores a la clase
+                objmaquina.nombre=nom
+                objmaquina.preciocompra=precom
+                objmaquina.estado=est
+                //llamamos al metodo para registrar
+                RegistrarMaquina(raiz.context,objmaquina)
+                objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmMaquina) as ViewGroup)
+                //actualizamos el fragmento
+                val fmaquina=FragmentoMaquina()
+                ft=fragmentManager?.beginTransaction()
+                ft?.replace(R.id.contenedor,fmaquina,null)
+                ft?.addToBackStack(null)
+                ft?.commit()
+            }
+        }
+
+        lstMaq.setOnItemClickListener(
+            AdapterView.OnItemClickListener
+        { parent, view, position, id ->
+            fila=position
+            //asignamos los valores a cada control
+            lblCodMaq.setText(""+(registromaquina as ArrayList<Maquina>).get(fila).idmaquina)
+            txtNomMaq.setText(""+(registromaquina as ArrayList<Maquina>).get(fila).nombre)
+            txtPreComMaq.setText(""+(registromaquina as ArrayList<Maquina>).get(fila).preciocompra)
+            if((registromaquina as ArrayList<Maquina>).get(fila).estado){
+                chkEstMaq.setChecked(true)
+            }else{
+                chkEstMaq.setChecked(false)
+            }
+        })
+
+        return raiz
+
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentoMaquina.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentoMaquina().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    fun MostrarMaquina(context: Context?){
+        val call= maquinaService!!.MostrarMaquinaPersonalizado()
+        call!!.enqueue(object : Callback<List<Maquina>?> {
+            override fun onResponse(
+                call: Call<List<Maquina>?>,
+                response: Response<List<Maquina>?>
+            ) {
+                if(response.isSuccessful){
+                    registromaquina=response.body()
+                    lstMaq.adapter= AdaptadorMaquina(context,registromaquina)
                 }
             }
+
+            override fun onFailure(call: Call<List<Maquina>?>, t: Throwable) {
+                Log.e("Error: ", t.message!!)
+            }
+
+
+        })
+    }
+
+    //creamos una funcion para registrar categoria
+    fun RegistrarMaquina(context: Context?, m: Maquina?){
+        val call= maquinaService!!.RegistrarMaquina(m)
+        call!!.enqueue(object : Callback<Maquina?> {
+            override fun onResponse(call: Call<Maquina?>, response: Response<Maquina?>) {
+                if(response.isSuccessful){
+                    objutilidad.MensajeToast(context!!,"Se registro la máquina")
+                }
+            }
+
+            override fun onFailure(call: Call<Maquina?>, t: Throwable) {
+                Log.e("Error: ", t.message!!)
+            }
+
+
+        })
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

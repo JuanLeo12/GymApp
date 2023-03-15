@@ -1,59 +1,187 @@
 package pe.com.gymapp
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
+import androidx.fragment.app.FragmentTransaction
+import pe.com.gymapp.adaptadores.AdaptadorProveedor
+import pe.com.gymapp.clases.Proveedor
+import pe.com.gymapp.remoto.ApiUtil
+import pe.com.gymapp.servicios.ProveedorService
+import pe.com.gymapp.utilidad.Util
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentoProveedor.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FragmentoProveedor : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var txtNomProv: EditText
+    private lateinit var txtTelfProv: EditText
+    private lateinit var txtCorrProv: EditText
+    private lateinit var txtDirProv: EditText
+    private lateinit var chkEstProv: CheckBox
+    private lateinit var lblCodProv: TextView
+    private lateinit var btnRegistrar: Button
+    private lateinit var btnActualizar: Button
+    private lateinit var btnEliminar: Button
+    private lateinit var lstProv: ListView
+
+    val objproveedor= Proveedor()
+
+    private var cod=0
+    private var nom=""
+    private var telf=""
+    private var corr=""
+    private var dir=""
+    private var est=false
+    private var fila=-1
+
+    private var proveedorService: ProveedorService?=null
+
+    private var registroproveedor:List<Proveedor>?=null
+
+    var objutilidad= Util()
+
+    var ft: FragmentTransaction?=null
+
+    private var _binding: FragmentoProveedor? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragmento_proveedor, container, false)
+
+        val raiz=inflater.inflate(R.layout.fragmento_proveedor,container,false)
+        //creamos los controles
+        txtNomProv=raiz.findViewById(R.id.txtNomProv)
+        txtTelfProv=raiz.findViewById(R.id.txtTelfProv)
+        txtCorrProv=raiz.findViewById(R.id.txtCorrProv)
+        txtDirProv=raiz.findViewById(R.id.txtDirProv)
+        chkEstProv=raiz.findViewById(R.id.chkEstProv)
+        lblCodProv=raiz.findViewById(R.id.lblCodProv)
+        btnRegistrar=raiz.findViewById(R.id.btnRegistrar)
+        btnActualizar=raiz.findViewById(R.id.btnActualizar)
+        btnEliminar=raiz.findViewById(R.id.btnEliminar)
+        lstProv=raiz.findViewById(R.id.lstProv)
+
+        registroproveedor=ArrayList()
+
+        //implementamos el servicio
+        proveedorService= ApiUtil.proveedorService
+
+        //mostramos las categorias
+        MostrarProveedor(raiz.context)
+
+        //agregamos los eventos
+        btnRegistrar.setOnClickListener {
+            if(txtNomProv.getText().toString()==""||txtTelfProv.getText().toString()==""||txtCorrProv.getText().toString()==""||txtDirProv.getText().toString()==""){
+                objutilidad.MensajeToast(raiz.context,"Faltan datos")
+                txtNomProv.requestFocus()
+            }else{
+                //capturando valores
+                nom=txtNomProv.getText().toString()
+                telf=txtTelfProv.getText().toString()
+                corr=txtCorrProv.getText().toString()
+                dir=txtDirProv.getText().toString()
+                est=if(chkEstProv.isChecked){
+                    true
+                }else{
+                    false
+                }
+                //enviamos los valores a la clase
+                objproveedor.nombre=nom
+                objproveedor.telefono=telf
+                objproveedor.correo=corr
+                objproveedor.direccion=dir
+                objproveedor.estado=est
+                //llamamos al metodo para registrar
+                RegistrarProveedor(raiz.context,objproveedor)
+                objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmProveedor) as ViewGroup)
+                //actualizamos el fragmento
+                val fproveedor=FragmentoProveedor()
+                ft=fragmentManager?.beginTransaction()
+                ft?.replace(R.id.contenedor,fproveedor,null)
+                ft?.addToBackStack(null)
+                ft?.commit()
+            }
+        }
+
+        lstProv.setOnItemClickListener(
+            AdapterView.OnItemClickListener
+        { parent, view, position, id ->
+            fila=position
+            //asignamos los valores a cada control
+            lblCodProv.setText(""+(registroproveedor as ArrayList<Proveedor>).get(fila).idproveedor)
+            txtNomProv.setText(""+(registroproveedor as ArrayList<Proveedor>).get(fila).nombre)
+            txtTelfProv.setText(""+(registroproveedor as ArrayList<Proveedor>).get(fila).telefono)
+            txtCorrProv.setText(""+(registroproveedor as ArrayList<Proveedor>).get(fila).correo)
+            txtDirProv.setText(""+(registroproveedor as ArrayList<Proveedor>).get(fila).direccion)
+            if((registroproveedor as ArrayList<Proveedor>).get(fila).estado){
+                chkEstProv.setChecked(true)
+            }else{
+                chkEstProv.setChecked(false)
+            }
+        })
+
+        return raiz
+
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentoProveedor.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentoProveedor().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    fun MostrarProveedor(context: Context?){
+        val call= proveedorService!!.MostrarProveedorPersonalizado()
+        call!!.enqueue(object : Callback<List<Proveedor>?> {
+            override fun onResponse(
+                call: Call<List<Proveedor>?>,
+                response: Response<List<Proveedor>?>
+            ) {
+                if(response.isSuccessful){
+                    registroproveedor=response.body()
+                    lstProv.adapter= AdaptadorProveedor(context,registroproveedor)
                 }
             }
+
+            override fun onFailure(call: Call<List<Proveedor>?>, t: Throwable) {
+                Log.e("Error: ", t.message!!)
+            }
+
+
+        })
+    }
+
+    //creamos una funcion para registrar
+    fun RegistrarProveedor(context: Context?, p: Proveedor?){
+        val call= proveedorService!!.RegistrarProveedor(p)
+        call!!.enqueue(object : Callback<Proveedor?> {
+            override fun onResponse(call: Call<Proveedor?>, response: Response<Proveedor?>) {
+                if(response.isSuccessful){
+                    objutilidad.MensajeToast(context!!,"Se registro el proveedor")
+                }
+            }
+
+            override fun onFailure(call: Call<Proveedor?>, t: Throwable) {
+                Log.e("Error: ", t.message!!)
+            }
+
+
+        })
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

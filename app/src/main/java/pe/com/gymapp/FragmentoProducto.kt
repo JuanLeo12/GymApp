@@ -1,59 +1,177 @@
 package pe.com.gymapp
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
+import androidx.fragment.app.FragmentTransaction
+import pe.com.gymapp.adaptadores.AdaptadorProducto
+import pe.com.gymapp.clases.Producto
+import pe.com.gymapp.remoto.ApiUtil
+import pe.com.gymapp.servicios.ProductoService
+import pe.com.gymapp.utilidad.Util
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentoProducto.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FragmentoProducto : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var txtNomPro: EditText
+    private lateinit var txtPreComPro: EditText
+    private lateinit var txtPreVenPro: EditText
+    private lateinit var chkEstPro: CheckBox
+    private lateinit var lblCodPro: TextView
+    private lateinit var btnRegistrar: Button
+    private lateinit var btnActualizar: Button
+    private lateinit var btnEliminar: Button
+    private lateinit var lstPro: ListView
+
+    val objproducto= Producto()
+
+
+    private var cod=0
+    private var nom=""
+    private var precom=0.0
+    private var preven=0.0
+    private var est=false
+    private var fila=-1
+
+    private var productoService:ProductoService?=null
+    private var registroproducto:List<Producto>?=null
+
+    var objutilidad= Util()
+
+    var ft: FragmentTransaction?=null
+
+    private var _binding: FragmentoProducto?=null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragmento_producto, container, false)
+        val raiz=inflater.inflate(R.layout.fragmento_producto,container,false)
+        //creamos los controles
+        txtNomPro=raiz.findViewById(R.id.txtNomPro)
+        txtPreComPro=raiz.findViewById(R.id.txtPreComPro)
+        txtPreVenPro=raiz.findViewById(R.id.txtPreVenPro)
+        chkEstPro=raiz.findViewById(R.id.chkEstPro)
+        lblCodPro=raiz.findViewById(R.id.lblCodPro)
+        btnRegistrar=raiz.findViewById(R.id.btnRegistrar)
+        btnActualizar=raiz.findViewById(R.id.btnActualizar)
+        btnEliminar=raiz.findViewById(R.id.btnEliminar)
+        lstPro=raiz.findViewById(R.id.lstPro)
+
+        registroproducto=ArrayList()
+
+        //implementamos el servicio
+        productoService= ApiUtil.productoService
+
+        //mostramos las categorias
+        MostrarProducto(raiz.context)
+
+        //agregamos los eventos
+        btnRegistrar.setOnClickListener {
+            if(txtNomPro.getText().toString()=="" || txtPreComPro.getText().toString()=="" || txtPreVenPro.getText().toString()==""){
+                objutilidad.MensajeToast(raiz.context,"Faltan Datos")
+                txtNomPro.requestFocus()
+            }else{
+                //capturando valores
+                nom=txtNomPro.getText().toString()
+                precom= txtPreComPro.getText().toString().toDouble()
+                preven= txtPreVenPro.getText().toString().toDouble()
+                est=if(chkEstPro.isChecked){
+                    true
+                }else{
+                    false
+                }
+                //enviamos los valores a la clase
+                objproducto.nombre=nom
+                objproducto.preciocompra=precom
+                objproducto.precioventa=preven
+                objproducto.estado=est
+                //llamamos al metodo para registrar
+                RegistrarProducto(raiz.context,objproducto)
+                objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmProducto) as ViewGroup)
+                //actualizamos el fragmento
+                val fproducto=FragmentoProducto()
+                ft=fragmentManager?.beginTransaction()
+                ft?.replace(R.id.contenedor,fproducto,null)
+                ft?.addToBackStack(null)
+                ft?.commit()
+            }
+        }
+
+        lstPro.setOnItemClickListener(AdapterView.OnItemClickListener
+        { parent, view, position, id ->
+            fila=position
+            //asignamos los valores a cada control
+            lblCodPro.setText(""+(registroproducto as ArrayList<Producto>).get(fila).idproducto)
+            txtNomPro.setText(""+(registroproducto as ArrayList<Producto>).get(fila).nombre)
+            txtPreComPro.setText(""+(registroproducto as ArrayList<Producto>).get(fila).preciocompra)
+            txtPreVenPro.setText(""+(registroproducto as ArrayList<Producto>).get(fila).precioventa)
+            if((registroproducto as ArrayList<Producto>).get(fila).estado){
+                chkEstPro.setChecked(true)
+            }else{
+                chkEstPro.setChecked(false)
+            }
+        })
+
+        return raiz
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentoProducto.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentoProducto().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    fun MostrarProducto(context: Context?){
+        val call= productoService!!.MostrarProductoPersonalizado()
+        call!!.enqueue(object : Callback<List<Producto>?> {
+            override fun onResponse(
+                call: Call<List<Producto>?>,
+                response: Response<List<Producto>?>
+            ) {
+                if(response.isSuccessful){
+                    registroproducto=response.body()
+                    lstPro.adapter= AdaptadorProducto(context,registroproducto)
                 }
             }
+
+            override fun onFailure(call: Call<List<Producto>?>, t: Throwable) {
+                Log.e("Error: ", t.message!!)
+            }
+
+
+        })
+    }
+
+    fun RegistrarProducto(context: Context?, p: Producto?){
+        val call= productoService!!.RegistrarProducto(p)
+        call!!.enqueue(object : Callback<Producto?> {
+            override fun onResponse(call: Call<Producto?>, response: Response<Producto?>) {
+                if(response.isSuccessful){
+                    objutilidad.MensajeToast(context!!,"Se registro el producto")
+                }
+            }
+
+            override fun onFailure(call: Call<Producto?>, t: Throwable) {
+                Log.e("Error: ", t.message!!)
+            }
+
+
+        })
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
