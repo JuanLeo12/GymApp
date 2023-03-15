@@ -18,5 +18,5 @@ interface ProductoService {
     fun ActualizarProducto(@Path("id") id:Long, @Body p: Producto?): Call<Producto?>?
 
     @DELETE("producto/{id}")
-    fun ActualizarProducto(@Path("id") id:Long): Call<Producto?>?
+    fun EliminarProducto(@Path("id") id:Long): Call<Producto?>?
 }

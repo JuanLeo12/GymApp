@@ -98,6 +98,33 @@ class FragmentoRol : Fragment() {
             }
         }
 
+//        btnActualizar.setOnClickListener {
+//            if(txtRol.getText().toString()==""){
+//                objutilidad.MensajeToast(raiz.context,"Ingrese el rol")
+//                txtRol.requestFocus()
+//            }else{
+//                //capturando valores
+//                nom=txtRol.getText().toString()
+//                est=if(chkEstRol.isChecked){
+//                    true
+//                }else{
+//                    false
+//                }
+//                //enviamos los valores a la clase
+//                objrol.rol=nom
+//                objrol.estado=est
+//                //llamamos al metodo para actualizar
+//                ActualizarRol(raiz.context, id,objrol)
+//                objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmRol) as ViewGroup)
+//                //actualizamos el fragmento
+//                val frol=FragmentoRol()
+//                ft=fragmentManager?.beginTransaction()
+//                ft?.replace(R.id.contenedor,frol,null)
+//                ft?.addToBackStack(null)
+//                ft?.commit()
+//            }
+//        }
+
         lstRol.setOnItemClickListener(
             AdapterView.OnItemClickListener
         { parent, view, position, id ->
@@ -152,6 +179,21 @@ class FragmentoRol : Fragment() {
             }
 
 
+        })
+    }
+
+    fun ActualizarRol(context: Context? ,id:Long,r: Rol?){
+        val call=rolService!!.ActualizarRol(id,r)
+        call!!.enqueue(object : Callback<Rol?>{
+            override fun onResponse(call: Call<Rol?>, response: Response<Rol?>) {
+                if(response.isSuccessful){
+                    objutilidad.MensajeToast(context!!,"Se actualizó el rol")
+                }
+            }
+
+            override fun onFailure(call: Call<Rol?>, t: Throwable) {
+                Log.e("Error: ", t.message!!)
+            }
         })
     }
 

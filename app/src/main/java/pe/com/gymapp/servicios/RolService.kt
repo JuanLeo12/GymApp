@@ -18,5 +18,5 @@ interface RolService {
     fun ActualizarRol(@Path("id") id:Long, @Body r: Rol?): Call<Rol?>?
 
     @DELETE("rol/{id}")
-    fun ActualizarRol(@Path("id") id:Long): Call<Rol?>?
+    fun EliminarRol(@Path("id") id:Long): Call<Rol?>?
 }

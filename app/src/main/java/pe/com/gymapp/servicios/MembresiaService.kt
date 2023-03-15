@@ -18,5 +18,5 @@ interface MembresiaService {
     fun ActualizarMembresia(@Path("id") id:Long, @Body m: Membresia?): Call<Membresia?>?
 
     @DELETE("membresia/{id}")
-    fun ActualizarMembresia(@Path("id") id:Long): Call<Membresia?>?
+    fun EliminarMembresia(@Path("id") id:Long): Call<Membresia?>?
 }

@@ -18,5 +18,5 @@ interface ProveedorService {
     fun ActualizarProveedor(@Path("id") id:Long, @Body p: Proveedor?): Call<Proveedor?>?
 
     @DELETE("proveedor/{id}")
-    fun ActualizarProveedor(@Path("id") id:Long): Call<Proveedor?>?
+    fun EliminarProveedor(@Path("id") id:Long): Call<Proveedor?>?
 }

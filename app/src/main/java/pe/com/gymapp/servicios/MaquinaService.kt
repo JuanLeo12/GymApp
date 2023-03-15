@@ -18,5 +18,5 @@ interface MaquinaService {
     fun ActualizarMaquina(@Path("id") id:Long, @Body m: Maquina?): Call<Maquina?>?
 
     @DELETE("maquina/{id}")
-    fun ActualizarMaquina(@Path("id") id:Long): Call<Maquina?>?
+    fun EliminarMaquina(@Path("id") id:Long): Call<Maquina?>?
 }
