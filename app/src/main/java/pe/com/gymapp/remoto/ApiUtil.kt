@@ -21,4 +21,7 @@ object ApiUtil {
     val proveedorService: ProveedorService?
         get() =RetrofitClient.getClient(API_URl)?.create(ProveedorService::class.java)
 
+    val compraProductoService: CompraProductoService?
+        get() =RetrofitClient.getClient(API_URl)?.create(CompraProductoService::class.java)
+
 }
