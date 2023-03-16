@@ -9,8 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.FragmentTransaction
+import pe.com.gymapp.adaptadores.AdaptadorCompraProducto
 import pe.com.gymapp.clases.CompraProducto
-import pe.com.gymapp.clases.Producto
 import pe.com.gymapp.remoto.ApiUtil
 import pe.com.gymapp.servicios.CompraProductoService
 import pe.com.gymapp.utilidad.Util
@@ -77,15 +77,15 @@ class FragmentoCompraProducto : Fragment() {
             }else{
                 //capturando valores
                 pro=spProComPro.adapter.toString()
-                prov=spProvComPro.adapter.toString()
+                //prov=spProvComPro.adapter.toString()
                 cant= txtCantComPro.getText().toString().toDouble()
 
                 //enviamos los valores a la clase
-                objcompraproducto.producto=pro
+                //objcompraproducto.producto=pro
                 objcompraproducto.proveedor=prov
                 objcompraproducto.cantidad=cant
                 //llamamos al metodo para registrar
-                RegistrarProducto(raiz.context,objcompraproducto)
+                RegistrarCompraProducto(raiz.context,objcompraproducto)
                 objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmCompProd) as ViewGroup)
                 //actualizamos el fragmento
                 val fcompproducto=FragmentoCompraProducto()
@@ -101,35 +101,28 @@ class FragmentoCompraProducto : Fragment() {
         { parent, view, position, id ->
             fila=position
             //asignamos los valores a cada control
-            lblCodPro.setText(""+(registroproducto as ArrayList<Producto>).get(fila).idproducto)
-            txtNomPro.setText(""+(registroproducto as ArrayList<Producto>).get(fila).nombre)
-            txtPreComPro.setText(""+(registroproducto as ArrayList<Producto>).get(fila).preciocompra)
-            txtPreVenPro.setText(""+(registroproducto as ArrayList<Producto>).get(fila).precioventa)
-            txtCantPro.setText(""+(registroproducto as ArrayList<Producto>).get(fila).cantidad)
-            if((registroproducto as ArrayList<Producto>).get(fila).estado){
-                chkEstPro.setChecked(true)
-            }else{
-                chkEstPro.setChecked(false)
-            }
+//            spProComPro.setText(""+(registrocompraProducto as ArrayList<CompraProducto>).get(fila).producto)
+//            spProvComPro.setText(""+(registrocompraProducto as ArrayList<CompraProducto>).get(fila).proveedor)
+            txtCantComPro.setText(""+(registrocompraProducto as ArrayList<CompraProducto>).get(fila).cantidad)
         })
 
         return raiz
     }
 
-    fun MostrarProducto(context: Context?){
-        val call= productoService!!.MostrarProductoPersonalizado()
-        call!!.enqueue(object : Callback<List<Producto>?> {
+    fun MostrarCompraProducto(context: Context?){
+        val call= compraProductoService!!.MostrarCompraProducto()
+        call!!.enqueue(object : Callback<List<CompraProducto>?> {
             override fun onResponse(
-                call: Call<List<Producto>?>,
-                response: Response<List<Producto>?>
+                call: Call<List<CompraProducto>?>,
+                response: Response<List<CompraProducto>?>
             ) {
                 if(response.isSuccessful){
-                    registroproducto=response.body()
-                    lstPro.adapter= AdaptadorProducto(context,registroproducto)
+                    registrocompraProducto=response.body()
+                    lstComPro.adapter= AdaptadorCompraProducto(context,registrocompraProducto)
                 }
             }
 
-            override fun onFailure(call: Call<List<Producto>?>, t: Throwable) {
+            override fun onFailure(call: Call<List<CompraProducto>?>, t: Throwable) {
                 Log.e("Error: ", t.message!!)
             }
 
@@ -137,16 +130,16 @@ class FragmentoCompraProducto : Fragment() {
         })
     }
 
-    fun RegistrarProducto(context: Context?, p: CompraProducto?){
-        val call= productoService!!.RegistrarProducto(p)
-        call!!.enqueue(object : Callback<Producto?> {
-            override fun onResponse(call: Call<Producto?>, response: Response<Producto?>) {
+    fun RegistrarCompraProducto(context: Context?, p: CompraProducto?){
+        val call= compraProductoService!!.RegistrarCompraProducto(p)
+        call!!.enqueue(object : Callback<CompraProducto?> {
+            override fun onResponse(call: Call<CompraProducto?>, response: Response<CompraProducto?>) {
                 if(response.isSuccessful){
-                    objutilidad.MensajeToast(context!!,"Se registro el producto")
+                    objutilidad.MensajeToast(context!!,"Se registro la compra del producto")
                 }
             }
 
-            override fun onFailure(call: Call<Producto?>, t: Throwable) {
+            override fun onFailure(call: Call<CompraProducto?>, t: Throwable) {
                 Log.e("Error: ", t.message!!)
             }
 
