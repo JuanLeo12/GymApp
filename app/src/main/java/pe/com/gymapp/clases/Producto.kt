@@ -16,6 +16,9 @@ class Producto {
     @SerializedName("precioventa")
     @Expose
     var precioventa:Double=0.0
+    @SerializedName("cantidad")
+    @Expose
+    var cantidad:Double=0.0
     @SerializedName("estado")
     @Expose
     var estado:Boolean=false
@@ -26,12 +29,14 @@ class Producto {
         nombre: String?,
         preciocompra: Double,
         precioventa: Double,
+        cantidad:Double,
         estado: Boolean
     ) {
         this.idproducto = idproducto
         this.nombre = nombre
         this.preciocompra = preciocompra
         this.precioventa = precioventa
+        this.cantidad =cantidad
         this.estado = estado
     }
 

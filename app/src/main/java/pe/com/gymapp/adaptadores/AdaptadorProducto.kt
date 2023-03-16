@@ -39,12 +39,14 @@ class AdaptadorProducto (context: Context?, private val listaproducto:List<Produ
             val lstNomCat = vista!!.findViewById<TextView>(R.id.lstNomPro)
             val lstPreComPro = vista!!.findViewById<TextView>(R.id.lstPreComPro)
             val lstPreVenPro = vista!!.findViewById<TextView>(R.id.lstPreVenPro)
+            val lstCantPro = vista!!.findViewById<TextView>(R.id.lstCantPro)
             val lstEstCat = vista!!.findViewById<TextView>(R.id.lstEstPro)
             //agregamos valores a los contrales
             lstCodCat.text = "" + objproducto.idproducto
             lstNomCat.text = "" + objproducto.nombre
             lstPreComPro.text = "" + objproducto.preciocompra
             lstPreVenPro.text = "" + objproducto.precioventa
+            lstCantPro.text = "" + objproducto.cantidad.toInt()
             if (objproducto.estado == true) {
                 lstEstCat.text = "Habilitado"
             } else {

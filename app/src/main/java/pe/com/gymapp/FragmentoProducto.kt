@@ -23,6 +23,7 @@ class FragmentoProducto : Fragment() {
     private lateinit var txtNomPro: EditText
     private lateinit var txtPreComPro: EditText
     private lateinit var txtPreVenPro: EditText
+    private lateinit var txtCantPro: EditText
     private lateinit var chkEstPro: CheckBox
     private lateinit var lblCodPro: TextView
     private lateinit var btnRegistrar: Button
@@ -37,6 +38,7 @@ class FragmentoProducto : Fragment() {
     private var nom=""
     private var precom=0.0
     private var preven=0.0
+    private var cant=0.0
     private var est=false
     private var fila=-1
 
@@ -62,6 +64,7 @@ class FragmentoProducto : Fragment() {
         txtNomPro=raiz.findViewById(R.id.txtNomPro)
         txtPreComPro=raiz.findViewById(R.id.txtPreComPro)
         txtPreVenPro=raiz.findViewById(R.id.txtPreVenPro)
+        txtCantPro=raiz.findViewById(R.id.txtCantPro)
         chkEstPro=raiz.findViewById(R.id.chkEstPro)
         lblCodPro=raiz.findViewById(R.id.lblCodPro)
         btnRegistrar=raiz.findViewById(R.id.btnRegistrar)
@@ -87,6 +90,8 @@ class FragmentoProducto : Fragment() {
                 nom=txtNomPro.getText().toString()
                 precom= txtPreComPro.getText().toString().toDouble()
                 preven= txtPreVenPro.getText().toString().toDouble()
+                //cant= txtCantPro.getText().toString().toDouble()
+
                 est=if(chkEstPro.isChecked){
                     true
                 }else{
@@ -96,6 +101,7 @@ class FragmentoProducto : Fragment() {
                 objproducto.nombre=nom
                 objproducto.preciocompra=precom
                 objproducto.precioventa=preven
+                objproducto.cantidad=cant
                 objproducto.estado=est
                 //llamamos al metodo para registrar
                 RegistrarProducto(raiz.context,objproducto)
@@ -117,6 +123,7 @@ class FragmentoProducto : Fragment() {
             txtNomPro.setText(""+(registroproducto as ArrayList<Producto>).get(fila).nombre)
             txtPreComPro.setText(""+(registroproducto as ArrayList<Producto>).get(fila).preciocompra)
             txtPreVenPro.setText(""+(registroproducto as ArrayList<Producto>).get(fila).precioventa)
+            txtCantPro.setText(""+(registroproducto as ArrayList<Producto>).get(fila).cantidad)
             if((registroproducto as ArrayList<Producto>).get(fila).estado){
                 chkEstPro.setChecked(true)
             }else{
