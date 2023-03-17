@@ -24,4 +24,15 @@ object ApiUtil {
     val compraProductoService: CompraProductoService?
         get() =RetrofitClient.getClient(API_URl)?.create(CompraProductoService::class.java)
 
+    val empleadoService: EmpleadoService?
+        get() =RetrofitClient.getClient(API_URl)?.create(EmpleadoService::class.java)
+
+    val usuarioService: UsuarioService?
+        get() =RetrofitClient.getClient(API_URl)?.create(UsuarioService::class.java)
+
+    val clienteService: ClienteService?
+        get() =RetrofitClient.getClient(API_URl)?.create(ClienteService::class.java)
+
+    val comprarMaquinaService: CompraMaquinaService?
+        get() =RetrofitClient.getClient(API_URl)?.create(CompraMaquinaService::class.java)
 }
