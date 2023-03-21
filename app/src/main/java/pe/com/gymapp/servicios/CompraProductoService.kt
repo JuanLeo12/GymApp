@@ -9,8 +9,8 @@ interface CompraProductoService {
     fun MostrarCompraProducto(): Call<List<CompraProducto>?>?
 
     @POST("compraProducto")
-    fun RegistrarCompraProducto(@Body m: CompraProducto?): Call<CompraProducto?>?
+    fun RegistrarCompraProducto(@Body cp: CompraProducto?): Call<CompraProducto?>?
 
     @PUT("compraProducto/{id}")
-    fun ActualizarProducto(@Path("id") id:Long, @Body m: CompraProducto?): Call<CompraProducto?>?
+    fun ActualizarProducto(@Path("id") id:Long, @Body cp: CompraProducto?): Call<CompraProducto?>?
 }

@@ -1,5 +1,6 @@
 package pe.com.gymapp
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -33,7 +34,7 @@ class FragmentoProveedor : Fragment() {
 
     val objproveedor= Proveedor()
 
-    private var cod=0
+    private var cod=0L
     private var nom=""
     private var telf=""
     private var corr=""
@@ -48,6 +49,8 @@ class FragmentoProveedor : Fragment() {
     var objutilidad= Util()
 
     var ft: FragmentTransaction?=null
+
+    private var dialogo: AlertDialog.Builder?=null
 
     private var _binding: FragmentoProveedor? = null
 
@@ -132,12 +135,57 @@ class FragmentoProveedor : Fragment() {
             }
         })
 
+        btnActualizar.setOnClickListener {
+            if(fila>=0){
+                cod=lblCodProv.getText().toString().toLong()
+                nom=txtNomProv.getText().toString()
+                telf=txtTelfProv.getText().toString()
+                corr=txtCorrProv.getText().toString()
+                dir=txtDirProv.getText().toString()
+                est=if(chkEstProv.isChecked){
+                    true
+                }else{
+                    false
+                }
+                objproveedor.idproveedor=cod
+                objproveedor.nombre=nom
+                objproveedor.telefono=telf
+                objproveedor.correo=corr
+                objproveedor.direccion=dir
+                objproveedor.estado=est
+
+                ActualizarProveedor(raiz.context,objproveedor,cod)
+                objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmProveedor) as ViewGroup)
+                val fproveedor=FragmentoProveedor()
+                DialogoCRUD("Actualización de Proveedor","Se actualizó el Proveedor",fproveedor)
+            }else{
+                objutilidad.MensajeToast(raiz.context,"Seleccione un elemento de la lista")
+                lstProv.requestFocus()
+            }
+        }
+
+        btnEliminar.setOnClickListener {
+            if(fila>=0){
+                cod=lblCodProv.getText().toString().toLong()
+
+                objproveedor.idproveedor=cod
+
+                EliminarProveedor(raiz.context,cod)
+                objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmProveedor) as ViewGroup)
+                val fproveedor=FragmentoProveedor()
+                DialogoCRUD("Eliminación de Proveedor","Se eliminó el Proveedor",fproveedor)
+            }else{
+                objutilidad.MensajeToast(raiz.context,"Seleccione un elemento de la lista")
+                lstProv.requestFocus()
+            }
+        }
+
         return raiz
 
     }
 
     fun MostrarProveedor(context: Context?){
-        val call= proveedorService!!.MostrarProveedorPersonalizado()
+        val call= proveedorService!!.MostrarProveedor()
         call!!.enqueue(object : Callback<List<Proveedor>?> {
             override fun onResponse(
                 call: Call<List<Proveedor>?>,
@@ -163,7 +211,7 @@ class FragmentoProveedor : Fragment() {
         call!!.enqueue(object : Callback<Proveedor?> {
             override fun onResponse(call: Call<Proveedor?>, response: Response<Proveedor?>) {
                 if(response.isSuccessful){
-                    objutilidad.MensajeToast(context!!,"Se registro el proveedor")
+                    Log.e("mensaje","Se registró")
                 }
             }
 
@@ -173,6 +221,57 @@ class FragmentoProveedor : Fragment() {
 
 
         })
+    }
+
+    //creamos una funcion para actualizar
+    fun ActualizarProveedor(context: Context?,p: Proveedor?,id:Long){
+        val call= proveedorService!!.ActualizarProveedor(id,p)
+        call!!.enqueue(object :Callback<Proveedor?>{
+            override fun onResponse(call: Call<Proveedor?>, response: Response<Proveedor?>) {
+                if(response.isSuccessful){
+                    Log.e("mensaje","Se actualizó")
+                }
+            }
+
+            override fun onFailure(call: Call<Proveedor?>, t: Throwable) {
+                Log.e("Error: ", t.message!!)
+            }
+
+
+        })
+    }
+
+    //creamos una funcion para eliminar
+    fun EliminarProveedor(context: Context?,id:Long){
+        val call= proveedorService!!.EliminarProveedor(id)
+        call!!.enqueue(object :Callback<Proveedor?>{
+            override fun onResponse(call: Call<Proveedor?>, response: Response<Proveedor?>) {
+                if(response.isSuccessful){
+                    Log.e("mensaje","Se eliminó")
+                }
+            }
+
+            override fun onFailure(call: Call<Proveedor?>, t: Throwable) {
+                Log.e("Error: ", t.message!!)
+            }
+
+
+        })
+    }
+
+    fun DialogoCRUD(titulo:String,mensaje:String,fragmento:Fragment){
+        dialogo=AlertDialog.Builder(context)
+        dialogo!!.setTitle(titulo)
+        dialogo!!.setMessage(mensaje)
+        dialogo!!.setCancelable(false)
+        dialogo!!.setPositiveButton("Ok"){
+                dialogo,which->
+            ft=fragmentManager?.beginTransaction()
+            ft?.replace(R.id.contenedor,fragmento,null)
+            ft?.addToBackStack(null)
+            ft?.commit()
+        }
+        dialogo!!.show()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

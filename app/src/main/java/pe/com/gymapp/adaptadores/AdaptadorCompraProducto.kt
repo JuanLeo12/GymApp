@@ -8,6 +8,8 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import pe.com.gymapp.R
 import pe.com.gymapp.clases.CompraProducto
+import pe.com.gymapp.clases.Producto
+import pe.com.gymapp.clases.Proveedor
 
 class AdaptadorCompraProducto (context: Context?, private val listacompraproducto:List<CompraProducto>?):
     BaseAdapter() {
@@ -42,10 +44,10 @@ class AdaptadorCompraProducto (context: Context?, private val listacompraproduct
             val lstTotComPro = vista!!.findViewById<TextView>(R.id.lstTotComPro)
             //agregamos valores a los contrales
             lstCodComPro.text = "" + objcompraproducto.idcomppro
-            lstProComPro.text = "" + objcompraproducto.producto
-            lstProvComPro.text = "" + objcompraproducto.proveedor
+            lstProComPro.text = "" + Producto().nombre
+            lstProvComPro.text = "" + Proveedor().nombre
             lstCantComPro.text = "" + objcompraproducto.cantidad.toInt()
-            //lstTotComPro.text = "" + objcompraproducto.total.toInt()
+            lstTotComPro.text = "" + (objcompraproducto.cantidad * Producto().preciocompra)
         }
         return vista!!
     }

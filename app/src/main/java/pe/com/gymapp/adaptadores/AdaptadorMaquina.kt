@@ -38,12 +38,13 @@ class AdaptadorMaquina (context: Context?, private val listamaquina:List<Maquina
             val lstCodMaq = vista!!.findViewById<TextView>(R.id.lstCodMaq)
             val lstNomMaq = vista!!.findViewById<TextView>(R.id.lstNomMaq)
             val lstPreComMaq = vista!!.findViewById<TextView>(R.id.lstPreComMaq)
+            val lstCantMaq = vista!!.findViewById<TextView>(R.id.lstCantMaq)
             val lstEstMaq = vista!!.findViewById<TextView>(R.id.lstEstMaq)
             //agregamos valores a los contrales
             lstCodMaq.text = "" + objmaquina.idmaquina
             lstNomMaq.text = "" + objmaquina.nombre
             lstPreComMaq.text="" + objmaquina.preciocompra
-            lstEstMaq.text = "" + objmaquina.estado
+            lstCantMaq.text = "" + objmaquina.cantidad.toInt()
             if (objmaquina.estado == true) {
                 lstEstMaq.text = "Habilitado"
             } else {

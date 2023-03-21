@@ -1,5 +1,6 @@
 package pe.com.gymapp
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -30,7 +31,7 @@ class FragmentoMembresia : Fragment() {
 
     val objmembresia= Membresia()
 
-    private var cod=0
+    private var cod=0L
     private var tiem=""
     private var pre=0.0
     private var est=false
@@ -43,6 +44,8 @@ class FragmentoMembresia : Fragment() {
     var objutilidad= Util()
 
     var ft: FragmentTransaction?=null
+
+    private var dialogo: AlertDialog.Builder?=null
 
     private var _binding: FragmentoMembresia? = null
 
@@ -119,12 +122,53 @@ class FragmentoMembresia : Fragment() {
             }
         })
 
+        btnActualizar.setOnClickListener {
+            if(fila>=0){
+                cod=lblCodMem.getText().toString().toLong()
+                tiem=txtTiempoMem.getText().toString()
+                pre=txtPreMem.getText().toString().toDouble()
+                est=if(chkEstMem.isChecked){
+                    true
+                }else{
+                    false
+                }
+                objmembresia.idmembresia=cod
+                objmembresia.tiempo=tiem
+                objmembresia.precio=pre
+                objmembresia.estado=est
+
+                ActualizarMembresia(raiz.context,objmembresia,cod)
+                objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmMembresia) as ViewGroup)
+                val fmembresia=FragmentoMembresia()
+                DialogoCRUD("Actualización de Membresía","Se actualizó la Membresía",fmembresia)
+            }else{
+                objutilidad.MensajeToast(raiz.context,"Seleccione un elemento de la lista")
+                lstMem.requestFocus()
+            }
+        }
+
+        btnEliminar.setOnClickListener {
+            if(fila>=0){
+                cod=lblCodMem.getText().toString().toLong()
+
+                objmembresia.idmembresia=cod
+
+                EliminarMembresia(raiz.context,cod)
+                objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmMembresia) as ViewGroup)
+                val fmembresia=FragmentoMembresia()
+                DialogoCRUD("Eliminación de Membresía","Se eliminó la Membresía",fmembresia)
+            }else{
+                objutilidad.MensajeToast(raiz.context,"Seleccione un elemento de la lista")
+                lstMem.requestFocus()
+            }
+        }
+
         return raiz
 
     }
 
     fun MostrarMembresia(context: Context?){
-        val call= membresiaService!!.MostrarMembresiaPersonalizado()
+        val call= membresiaService!!.MostrarMembresia()
         call!!.enqueue(object : Callback<List<Membresia>?> {
             override fun onResponse(
                 call: Call<List<Membresia>?>,
@@ -160,6 +204,61 @@ class FragmentoMembresia : Fragment() {
 
 
         })
+    }
+
+
+    //creamos una funcion para actualizar
+    fun ActualizarMembresia(context: Context?,m: Membresia?,id:Long){
+        val call= membresiaService!!.ActualizarMembresia(id,m)
+        call!!.enqueue(object :Callback<Membresia?>{
+            override fun onResponse(call: Call<Membresia?>, response: Response<Membresia?>) {
+                if(response.isSuccessful){
+                    Log.e("mensaje","Se actualizó")
+                }
+            }
+
+            override fun onFailure(call: Call<Membresia?>, t: Throwable) {
+                Log.e("Error: ", t.message!!)
+            }
+
+
+        })
+    }
+
+    //creamos una funcion para eliminar
+    fun EliminarMembresia(context: Context?,id:Long){
+        val call= membresiaService!!.EliminarMembresia(id)
+        call!!.enqueue(object :Callback<Membresia?>{
+            override fun onResponse(call: Call<Membresia?>, response: Response<Membresia?>) {
+                if(response.isSuccessful){
+                    Log.e("mensaje","Se eliminó")
+                }
+            }
+
+            override fun onFailure(call: Call<Membresia?>, t: Throwable) {
+                Log.e("Error: ", t.message!!)
+            }
+
+
+        })
+    }
+
+
+
+    //creamos una función para los cuadros de dialogo del CRUD
+    fun DialogoCRUD(titulo:String,mensaje:String,fragmento:Fragment){
+        dialogo=AlertDialog.Builder(context)
+        dialogo!!.setTitle(titulo)
+        dialogo!!.setMessage(mensaje)
+        dialogo!!.setCancelable(false)
+        dialogo!!.setPositiveButton("Ok"){
+                dialogo,which->
+            ft=fragmentManager?.beginTransaction()
+            ft?.replace(R.id.contenedor,fragmento,null)
+            ft?.addToBackStack(null)
+            ft?.commit()
+        }
+        dialogo!!.show()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

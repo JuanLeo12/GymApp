@@ -1,5 +1,6 @@
 package pe.com.gymapp
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -29,7 +30,7 @@ class FragmentoRol : Fragment() {
 
     val objrol= Rol()
 
-    private var cod=0
+    private var cod=0L
     private var nom=""
     private var est=false
     private var fila=-1
@@ -41,6 +42,8 @@ class FragmentoRol : Fragment() {
     var objutilidad= Util()
 
     var ft: FragmentTransaction?=null
+
+    private var dialogo: AlertDialog.Builder?=null
 
     private var _binding: FragmentoRol? = null
 
@@ -91,60 +94,78 @@ class FragmentoRol : Fragment() {
                 objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmRol) as ViewGroup)
                 //actualizamos el fragmento
                 val frol=FragmentoRol()
-                ft=fragmentManager?.beginTransaction()
-                ft?.replace(R.id.contenedor,frol,null)
-                ft?.addToBackStack(null)
-                ft?.commit()
+                DialogoCRUD("Registro de Rol","Se registró el Rol",frol)
             }
         }
 
-//        btnActualizar.setOnClickListener {
-//            if(txtRol.getText().toString()==""){
-//                objutilidad.MensajeToast(raiz.context,"Ingrese el rol")
-//                txtRol.requestFocus()
-//            }else{
-//                //capturando valores
-//                nom=txtRol.getText().toString()
-//                est=if(chkEstRol.isChecked){
-//                    true
-//                }else{
-//                    false
-//                }
-//                //enviamos los valores a la clase
-//                objrol.rol=nom
-//                objrol.estado=est
-//                //llamamos al metodo para actualizar
-//                ActualizarRol(raiz.context, id,objrol)
-//                objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmRol) as ViewGroup)
-//                //actualizamos el fragmento
-//                val frol=FragmentoRol()
-//                ft=fragmentManager?.beginTransaction()
-//                ft?.replace(R.id.contenedor,frol,null)
-//                ft?.addToBackStack(null)
-//                ft?.commit()
-//            }
-//        }
-
         lstRol.setOnItemClickListener(
             AdapterView.OnItemClickListener
-        { parent, view, position, id ->
-            fila=position
-            //asignamos los valores a cada control
-            lblCodRol.setText(""+(registrorol as ArrayList<Rol>).get(fila).idrol)
-            txtRol.setText(""+(registrorol as ArrayList<Rol>).get(fila).rol)
-            if((registrorol as ArrayList<Rol>).get(fila).estado){
-                chkEstRol.setChecked(true)
+            { parent, view, position, id ->
+                fila=position
+                //asignamos los valores a cada control
+                lblCodRol.setText(""+(registrorol as ArrayList<Rol>).get(fila).idrol)
+                txtRol.setText(""+(registrorol as ArrayList<Rol>).get(fila).rol)
+                if((registrorol as ArrayList<Rol>).get(fila).estado){
+                    chkEstRol.setChecked(true)
+                }else{
+                    chkEstRol.setChecked(false)
+                }
+            })
+
+        btnActualizar.setOnClickListener {
+            if(fila>=0){
+
+                cod=lblCodRol.getText().toString().toLong()
+                nom=txtRol.getText().toString()
+                est=if(chkEstRol.isChecked){
+                    true
+                }else{
+                    false
+                }
+
+                objrol.idrol=cod
+                objrol.rol=nom
+                objrol.estado=est
+
+                ActualizarRol(raiz.context, cod,objrol)
+                objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmRol) as ViewGroup)
+
+                val frol=FragmentoRol()
+                DialogoCRUD("Actualización de Rol","Se actualizó el Rol",frol)
+
             }else{
-                chkEstRol.setChecked(false)
+                objutilidad.MensajeToast(raiz.context,"Seleccione un elemento de la lista")
+                lstRol.requestFocus()
+
+
             }
-        })
+        }
+
+
+        btnEliminar.setOnClickListener {
+            if(fila>=0){
+                cod=lblCodRol.getText().toString().toLong()
+
+                objrol.idrol=cod
+
+                EliminarRol(raiz.context,cod)
+                objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmRol) as ViewGroup)
+                val fcategoria=FragmentoRol()
+                DialogoCRUD("Eliminación de Rol","Se eliminó el Rol",fcategoria)
+            }else{
+                objutilidad.MensajeToast(raiz.context,"Seleccione un elemento de la lista")
+                lstRol.requestFocus()
+            }
+        }
+
+
 
         return raiz
 
     }
 
     fun MostrarRol(context: Context?){
-        val call= rolService!!.MostrarRolPersonalizado()
+        val call= rolService!!.MostrarRol()
         call!!.enqueue(object : Callback<List<Rol>?> {
             override fun onResponse(
                 call: Call<List<Rol>?>,
@@ -170,7 +191,7 @@ class FragmentoRol : Fragment() {
         call!!.enqueue(object : Callback<Rol?> {
             override fun onResponse(call: Call<Rol?>, response: Response<Rol?>) {
                 if(response.isSuccessful){
-                    objutilidad.MensajeToast(context!!,"Se registro el rol")
+                    Log.e("mensaje","Se registro el rol")
                 }
             }
 
@@ -187,7 +208,7 @@ class FragmentoRol : Fragment() {
         call!!.enqueue(object : Callback<Rol?>{
             override fun onResponse(call: Call<Rol?>, response: Response<Rol?>) {
                 if(response.isSuccessful){
-                    objutilidad.MensajeToast(context!!,"Se actualizó el rol")
+                    Log.e("mensaje","Se actualizó el rol")
                 }
             }
 
@@ -196,6 +217,40 @@ class FragmentoRol : Fragment() {
             }
         })
     }
+
+    fun EliminarRol(context: Context?,id:Long){
+        val call= rolService!!.EliminarRol(id)
+        call!!.enqueue(object :Callback<Rol?>{
+            override fun onResponse(call: Call<Rol?>, response: Response<Rol?>) {
+                if(response.isSuccessful){
+                    Log.e("mensaje","Se eliminó")
+                }
+            }
+
+            override fun onFailure(call: Call<Rol?>, t: Throwable) {
+                Log.e("Error: ", t.message!!)
+            }
+
+
+        })
+    }
+
+    //creamos una función para los cuadros de dialogo del CRUD
+    fun DialogoCRUD(titulo:String,mensaje:String,fragmento:Fragment){
+        dialogo= AlertDialog.Builder(context)
+        dialogo!!.setTitle(titulo)
+        dialogo!!.setMessage(mensaje)
+        dialogo!!.setCancelable(false)
+        dialogo!!.setPositiveButton("Ok"){
+                dialogo,which->
+            ft=fragmentManager?.beginTransaction()
+            ft?.replace(R.id.contenedor,fragmento,null)
+            ft?.addToBackStack(null)
+            ft?.commit()
+        }
+        dialogo!!.show()
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

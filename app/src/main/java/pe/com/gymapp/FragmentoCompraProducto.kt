@@ -38,10 +38,12 @@ class FragmentoCompraProducto : Fragment() {
     private val objproveedor=Proveedor()
 
     private var cod=0L
-    private var pro=""
-    private var prov=null
     private var cant=0.0
     private var fila=-1
+    private var prod=""
+    private var prov=""
+    private var codprod=0L
+    private var codprov=0L
 
     private var compraProductoService: CompraProductoService?=null
     private var registrocompraProducto:List<CompraProducto>?=null
@@ -53,6 +55,8 @@ class FragmentoCompraProducto : Fragment() {
     private var registroproveedor:List<Proveedor>?=null
 
     var objutilidad= Util()
+
+    var pos=0L
 
     var ft: FragmentTransaction?=null
 
@@ -90,45 +94,49 @@ class FragmentoCompraProducto : Fragment() {
         MostrarComboProveedor(raiz.context)
 
         //agregamos los eventos
-        //
-        //
-//        btnRegistrar.setOnClickListener {
-//            if(spProComPro.adapter.toString() =="" || spProvComPro.adapter.toString() =="" || txtCantComPro.getText().toString()==""){
-//                objutilidad.MensajeToast(raiz.context,"Faltan Datos")
-//                spProComPro.requestFocus()
-//            }else{
-//                //capturando valores
-//                pro=spProComPro.adapter.toString()
-//                //prov=spProvComPro.adapter.toString()
-//                cant= txtCantComPro.getText().toString().toDouble()
-//
-//                //enviamos los valores a la clase
-//                //objcompraproducto.producto=pro
-//                objcompraproducto.proveedor=prov
-//                objcompraproducto.cantidad=cant
-//                //llamamos al metodo para registrar
-//                RegistrarCompraProducto(raiz.context,objcompraproducto)
-//                objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmCompProd) as ViewGroup)
-//                //actualizamos el fragmento
-//                val fcompproducto=FragmentoCompraProducto()
-//                ft=fragmentManager?.beginTransaction()
-//                ft?.replace(R.id.contenedor,fcompproducto,null)
-//                ft?.addToBackStack(null)
-//                ft?.commit()
-//            }
-//        }
-//
-//        lstComPro.setOnItemClickListener(
-//            AdapterView.OnItemClickListener
-//        { parent, view, position, id ->
-//            fila=position
-//            //asignamos los valores a cada control
-////            spProComPro.setText(""+(registrocompraProducto as ArrayList<CompraProducto>).get(fila).producto)
-////            spProvComPro.setText(""+(registrocompraProducto as ArrayList<CompraProducto>).get(fila).proveedor)
-//            txtCantComPro.setText(""+(registrocompraProducto as ArrayList<CompraProducto>).get(fila).cantidad)
-//        })
-        //
-        //
+        btnRegistrar.setOnClickListener {
+            if(spProComPro.adapter.toString() =="" || spProvComPro.adapter.toString() =="" || txtCantComPro.getText().toString()==""){
+                objutilidad.MensajeToast(raiz.context,"Faltan Datos")
+                spProComPro.requestFocus()
+            }else{
+                //capturando valores
+                cant= txtCantComPro.getText().toString().toDouble()
+                pos=spProComPro.selectedItemPosition.toLong()
+                prod= (registroproducto as ArrayList<Producto>).get(pos.toInt()).nombre.toString()
+                prov= (registroproveedor as ArrayList<Proveedor>).get(pos.toInt()).nombre.toString()
+                codprod= (registroproducto as ArrayList<Producto>).get(pos.toInt()).idproducto
+                codprov= (registroproveedor as ArrayList<Proveedor>).get(pos.toInt()).idproveedor
+
+
+                //enviamos los valores a la clase
+                objcompraproducto.cantidad=cant
+                objproducto.idproducto=codprod
+                objproducto.nombre=prod
+                objproveedor.idproveedor=codprov
+                objproveedor.nombre=prov
+                //llamamos al metodo para registrar
+                RegistrarCompraProducto(raiz.context,objcompraproducto)
+                objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmCompProd) as ViewGroup)
+                //actualizamos el fragmento
+                val fcompproducto=FragmentoCompraProducto()
+                ft=fragmentManager?.beginTransaction()
+                ft?.replace(R.id.contenedor,fcompproducto,null)
+                ft?.addToBackStack(null)
+                ft?.commit()
+            }
+        }
+
+        lstComPro.setOnItemClickListener(
+            AdapterView.OnItemClickListener
+        { parent, view, position, id ->
+            fila=position
+            //asignamos los valores a cada control
+            //spProComPro.setText(""+(registrocompraProducto as ArrayList<CompraProducto>).get(fila).producto)
+            //spProvComPro.setText(""+(registrocompraProducto as ArrayList<CompraProducto>).get(fila).proveedor)
+            txtCantComPro.setText(""+(registrocompraProducto as ArrayList<CompraProducto>).get(fila).cantidad)
+        })
+
+
 
         return raiz
     }
@@ -200,8 +208,8 @@ class FragmentoCompraProducto : Fragment() {
         })
     }
 
-    fun RegistrarCompraProducto(context: Context?, p: CompraProducto?){
-        val call= compraProductoService!!.RegistrarCompraProducto(p)
+    fun RegistrarCompraProducto(context: Context?, cp: CompraProducto?){
+        val call= compraProductoService!!.RegistrarCompraProducto(cp)
         call!!.enqueue(object : Callback<CompraProducto?> {
             override fun onResponse(call: Call<CompraProducto?>, response: Response<CompraProducto?>) {
                 if(response.isSuccessful){
