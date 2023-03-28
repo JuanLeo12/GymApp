@@ -52,7 +52,8 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="Ingrese la Contraseña"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:maxLength="9" />
 
         </LinearLayout>
 

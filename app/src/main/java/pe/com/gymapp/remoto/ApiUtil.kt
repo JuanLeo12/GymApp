@@ -30,6 +30,9 @@ object ApiUtil {
     val usuarioService: UsuarioService?
         get() =RetrofitClient.getClient(API_URl)?.create(UsuarioService::class.java)
 
+    val generoService: GeneroService?
+        get() =RetrofitClient.getClient(API_URl)?.create(GeneroService::class.java)
+
     val clienteService: ClienteService?
         get() =RetrofitClient.getClient(API_URl)?.create(ClienteService::class.java)
 

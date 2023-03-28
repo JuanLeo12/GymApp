@@ -24,7 +24,7 @@ class Empleado {
     var correo:String?=null
     @SerializedName("genero")
     @Expose
-    var genero:String?=null
+    var genero:Genero?=null
     @SerializedName("direccion")
     @Expose
     var direccion:String?=null
@@ -43,7 +43,7 @@ class Empleado {
         apematerno: String?,
         telefono: String?,
         correo: String?,
-        genero: String?,
+        genero: Genero?,
         direccion: String?,
         rol: Rol?,
         estado: Boolean
@@ -59,5 +59,6 @@ class Empleado {
         this.rol = rol
         this.estado = estado
     }
+
 
 }
