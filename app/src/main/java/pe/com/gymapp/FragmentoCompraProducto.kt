@@ -1,5 +1,6 @@
 package pe.com.gymapp
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -28,6 +29,7 @@ class FragmentoCompraProducto : Fragment() {
     private lateinit var spProComPro: Spinner
     private lateinit var spProvComPro: Spinner
     private lateinit var txtCantComPro: EditText
+    private lateinit var lblCodCPro: TextView
     private lateinit var btnRegistrar: Button
     private lateinit var btnActualizar: Button
     private lateinit var lstComPro: ListView
@@ -38,12 +40,14 @@ class FragmentoCompraProducto : Fragment() {
     private val objproveedor=Proveedor()
 
     private var cod=0L
-    private var cant=0.0
-    private var fila=-1
+    private var cant=0
     private var prod=""
     private var prov=""
     private var codprod=0L
     private var codprov=0L
+    private var fila=-1
+    private var indice=-1
+    private var pos=-1
 
     private var compraProductoService: CompraProductoService?=null
     private var registrocompraProducto:List<CompraProducto>?=null
@@ -54,11 +58,13 @@ class FragmentoCompraProducto : Fragment() {
     private var proveedorService: ProveedorService?=null
     private var registroproveedor:List<Proveedor>?=null
 
-    var objutilidad= Util()
+    private val objutilidad= Util()
 
-    var pos=0L
+
 
     var ft: FragmentTransaction?=null
+
+    private var dialogo: AlertDialog.Builder?=null
 
     private var _binding: FragmentoProducto?=null
 
@@ -75,6 +81,7 @@ class FragmentoCompraProducto : Fragment() {
         spProComPro=raiz.findViewById(R.id.spProComPro)
         spProvComPro=raiz.findViewById(R.id.spProvComPro)
         txtCantComPro=raiz.findViewById(R.id.txtCantComPro)
+        lblCodCPro=raiz.findViewById(R.id.lblCodCPro)
         btnRegistrar=raiz.findViewById(R.id.btnRegistrar)
         btnActualizar=raiz.findViewById(R.id.btnActualizar)
         lstComPro=raiz.findViewById(R.id.lstComPro)
@@ -100,42 +107,83 @@ class FragmentoCompraProducto : Fragment() {
                 spProComPro.requestFocus()
             }else{
                 //capturando valores
-                cant= txtCantComPro.getText().toString().toDouble()
-                pos=spProComPro.selectedItemPosition.toLong()
-                prod= (registroproducto as ArrayList<Producto>).get(pos.toInt()).nombre.toString()
-                prov= (registroproveedor as ArrayList<Proveedor>).get(pos.toInt()).nombre.toString()
-                codprod= (registroproducto as ArrayList<Producto>).get(pos.toInt()).idproducto
-                codprov= (registroproveedor as ArrayList<Proveedor>).get(pos.toInt()).idproveedor
+                cant= txtCantComPro.text.toString().toInt()
+                pos=spProComPro.selectedItemPosition
+                prod= (registroproducto as ArrayList<Producto>).get(pos).nombre.toString()
+                prov= (registroproveedor as ArrayList<Proveedor>).get(pos).nombre.toString()
+                codprod= (registroproducto as ArrayList<Producto>).get(pos).idproducto
+                codprov= (registroproveedor as ArrayList<Proveedor>).get(pos).idproveedor
 
 
                 //enviamos los valores a la clase
-                objcompraproducto.cantidad=cant
+                objcompraproducto.cantidad=cant.toDouble()
+                objcompraproducto.idcomppro=cod
+
                 objproducto.idproducto=codprod
-                objproducto.nombre=prod
+                objcompraproducto.producto=objproducto
+
                 objproveedor.idproveedor=codprov
-                objproveedor.nombre=prov
+                objcompraproducto.proveedor=objproveedor
                 //llamamos al metodo para registrar
                 RegistrarCompraProducto(raiz.context,objcompraproducto)
                 objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmCompProd) as ViewGroup)
                 //actualizamos el fragmento
                 val fcompproducto=FragmentoCompraProducto()
-                ft=fragmentManager?.beginTransaction()
-                ft?.replace(R.id.contenedor,fcompproducto,null)
-                ft?.addToBackStack(null)
-                ft?.commit()
+                DialogoCRUD("Registro de Compra de Producto","Se registró la compra corrrectamente",fcompproducto)
             }
         }
 
-        lstComPro.setOnItemClickListener(
-            AdapterView.OnItemClickListener
-        { parent, view, position, id ->
-            fila=position
-            //asignamos los valores a cada control
-            //spProComPro.setText(""+(registrocompraProducto as ArrayList<CompraProducto>).get(fila).producto)
-            //spProvComPro.setText(""+(registrocompraProducto as ArrayList<CompraProducto>).get(fila).proveedor)
-            txtCantComPro.setText(""+(registrocompraProducto as ArrayList<CompraProducto>).get(fila).cantidad)
-        })
+        lstComPro.setOnItemClickListener { adapterView, view, i, l ->
+            fila=i
+            //asignamos los valores a los controles
+            lblCodCPro.setText(""+ (registrocompraProducto as ArrayList<CompraProducto>).get(fila).idcomppro)
+            txtCantComPro.setText(""+ (registrocompraProducto as ArrayList<CompraProducto>).get(fila).cantidad.toInt())
+            for(x in (registroproducto as ArrayList<Producto>).indices){
+                if((registroproducto as ArrayList<Producto>).get(x).nombre== (registrocompraProducto as ArrayList<CompraProducto>).get(fila).producto?.nombre){
+                    indice=x
+                }
+            }
+            spProComPro.setSelection(indice)
+            for(x in (registroproveedor as ArrayList<Proveedor>).indices){
+                if((registroproveedor as ArrayList<Proveedor>).get(x).nombre== (registrocompraProducto as ArrayList<CompraProducto>).get(fila).proveedor?.nombre){
+                    indice=x
+                }
+            }
+            spProComPro.setSelection(indice)
+        }
 
+        btnActualizar.setOnClickListener {
+            if(fila>=0){
+                //capturando valores
+                cod=lblCodCPro.text.toString().toLong()
+                cant= txtCantComPro.text.toString().toInt()
+                pos=spProComPro.selectedItemPosition
+                prod= (registroproducto as ArrayList<Producto>).get(pos).nombre.toString()
+                prov= (registroproveedor as ArrayList<Proveedor>).get(pos).nombre.toString()
+                codprod= (registroproducto as ArrayList<Producto>).get(pos).idproducto
+                codprov= (registroproveedor as ArrayList<Proveedor>).get(pos).idproveedor
+
+                //enviamos los valores a la clase
+                objcompraproducto.idcomppro=cod
+                objcompraproducto.cantidad=cant.toDouble()
+
+
+                objproducto.idproducto=codprod
+                objcompraproducto.producto=objproducto
+
+                objproveedor.idproveedor=codprov
+                objcompraproducto.proveedor=objproveedor
+
+                //llamamos a la funcion para registrar
+                ActualizarCompraProducto(raiz.context,objcompraproducto,cod)
+                val fcompraprod=FragmentoCompraProducto()
+                DialogoCRUD("Actualizacion de la Compra","Se actualizo la compra correctamente",fcompraprod)
+            }else{
+                objutilidad.MensajeToast(raiz.context,"Seleccione un elemento de la lista")
+                lstComPro.requestFocus()
+            }
+
+        }
 
 
         return raiz
@@ -223,6 +271,41 @@ class FragmentoCompraProducto : Fragment() {
 
 
         })
+    }
+
+
+    fun ActualizarCompraProducto(context: Context?,cp: CompraProducto?,id:Long){
+        val call= compraProductoService!!.ActualizarCompraProducto(id,cp)
+        call!!.enqueue(object :Callback<CompraProducto?>{
+            override fun onResponse(call: Call<CompraProducto?>, response: Response<CompraProducto?>) {
+                if(response.isSuccessful){
+                    Log.e("mensaje","Se actualizó")
+                }
+            }
+
+            override fun onFailure(call: Call<CompraProducto?>, t: Throwable) {
+                Log.e("Error: ", t.message!!)
+            }
+
+
+        })
+    }
+
+
+    //creamos una función para los cuadros de dialogo del CRUD
+    fun DialogoCRUD(titulo:String,mensaje:String,fragmento:Fragment){
+        dialogo= AlertDialog.Builder(context)
+        dialogo!!.setTitle(titulo)
+        dialogo!!.setMessage(mensaje)
+        dialogo!!.setCancelable(false)
+        dialogo!!.setPositiveButton("Ok"){
+                dialogo,which->
+            ft=fragmentManager?.beginTransaction()
+            ft?.replace(R.id.contenedor,fragmento,null)
+            ft?.addToBackStack(null)
+            ft?.commit()
+        }
+        dialogo!!.show()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

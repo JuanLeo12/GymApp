@@ -12,5 +12,5 @@ interface CompraProductoService {
     fun RegistrarCompraProducto(@Body cp: CompraProducto?): Call<CompraProducto?>?
 
     @PUT("compraProducto/{id}")
-    fun ActualizarProducto(@Path("id") id:Long, @Body cp: CompraProducto?): Call<CompraProducto?>?
+    fun ActualizarCompraProducto(@Path("id") id:Long, @Body cp: CompraProducto?): Call<CompraProducto?>?
 }

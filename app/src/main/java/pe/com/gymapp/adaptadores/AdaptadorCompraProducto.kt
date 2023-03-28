@@ -42,12 +42,14 @@ class AdaptadorCompraProducto (context: Context?, private val listacompraproduct
             val lstProvComPro = vista!!.findViewById<TextView>(R.id.lstProvComPro)
             val lstCantComPro = vista!!.findViewById<TextView>(R.id.lstCantComPro)
             val lstTotComPro = vista!!.findViewById<TextView>(R.id.lstTotComPro)
+            val lstPreCProd=vista!!.findViewById<TextView>(R.id.lstPreCProd)
             //agregamos valores a los contrales
             lstCodComPro.text = "" + objcompraproducto.idcomppro
-            lstProComPro.text = "" + Producto().nombre
-            lstProvComPro.text = "" + Proveedor().nombre
+            lstProComPro.text = "" + objcompraproducto.producto!!.nombre
+            lstProvComPro.text = "" + objcompraproducto.proveedor!!.nombre
             lstCantComPro.text = "" + objcompraproducto.cantidad.toInt()
-            lstTotComPro.text = "" + (objcompraproducto.cantidad * Producto().preciocompra)
+            lstPreCProd.text = "" + objcompraproducto.producto!!.preciocompra
+            lstTotComPro.text = "" + (objcompraproducto.cantidad * objcompraproducto.producto!!.preciocompra)
         }
         return vista!!
     }

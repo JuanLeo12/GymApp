@@ -55,26 +55,26 @@ class ActividadPrincipal : AppCompatActivity() {
                 supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
                 true
             }
-//            R.id.jmiEmpleado ->{
-//                val frag=FragmentoEmpleado()
-//                supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
-//                true
-//            }
-//            R.id.jmiRegistroCliente ->{
-//                val frag=FragmentoCliente()
-//                supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
-//                true
-//            }
-//            R.id.jmiSeguimientoFisico ->{
-//                val frag=FragmentoSeguimientoFisico()
-//                supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
-//                true
-//            }
-//            R.id.jmiIncidencia ->{
-//                val frag=FragmentoIncidencia()
-//                supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
-//                true
-//            }
+            R.id.jmiEmpleado ->{
+                val frag=FragmentoEmpleado()
+                supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
+                true
+            }
+            R.id.jmiRegistroCliente ->{
+                val frag=FragmentoCliente()
+                supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
+                true
+            }
+            R.id.jmiSeguimientoFisico ->{
+                val frag=FragmentoSeguimientoFisico()
+                supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
+                true
+            }
+            R.id.jmiIncidencia ->{
+                val frag=FragmentoIncidencia()
+                supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
+                true
+            }
             R.id.jmiRol ->{
                 val frag=FragmentoRol()
                 supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
@@ -95,52 +95,52 @@ class ActividadPrincipal : AppCompatActivity() {
                 supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
                 true
             }
-//            R.id.jmiDiasMantenimiento ->{
-//                val frag=FragmentoMantenimiento()
-//                supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
-//                true
-//            }
+            R.id.jmiDiasMantenimiento ->{
+                val frag=FragmentoMantenimiento()
+                supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
+                true
+            }
             R.id.jmiProveedor ->{
                 val frag=FragmentoProveedor()
                 supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
                 true
             }
-//            R.id.jmiComprarProducto ->{
-//                val frag=FragmentoCompraProducto()
-//                supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
-//                true
-//            }
-//            R.id.jmiComprarMaquina ->{
-//                val frag=FragmentoCompraMaquina()
-//                supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
-//                true
-//            }
-//            R.id.jmiVenta ->{
-//                val frag=FragmentoVenta()
-//                supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
-//                true
-//            }
-//            R.id.jmiAsistenciaEmpleado ->{
-//                val frag=FragmentoAsistenciaEmpleado()
-//                supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
-//                true
-//            }
-//            R.id.jmiAsistenciaCliente ->{
-//                val frag=FragmentoAsistenciaCliente()
-//                supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
-//                true
-//            }
-//            R.id.jmiUsuario ->{
-//                val frag=FragmentoUsuario()
-//                supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
-//                true
-//            }
-//            R.id.jmiCerrarSesion->{
-//                val formulario= Intent(this,ActividadIngreso::class.java)
-//                startActivity(formulario)
-//                this.finish()
-//                true
-//            }
+            R.id.jmiComprarProducto ->{
+                val frag=FragmentoCompraProducto()
+                supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
+                true
+            }
+            R.id.jmiComprarMaquina ->{
+                val frag=FragmentoCompraMaquina()
+                supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
+                true
+            }
+            R.id.jmiVenta ->{
+                val frag=FragmentoVenta()
+                supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
+                true
+            }
+            R.id.jmiAsistenciaEmpleado ->{
+                val frag=FragmentoAsistenciaEmpleado()
+                supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
+                true
+            }
+            R.id.jmiAsistenciaCliente ->{
+                val frag=FragmentoAsistenciaCliente()
+                supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
+                true
+            }
+            R.id.jmiUsuario ->{
+                val frag=FragmentoUsuario()
+                supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
+                true
+            }
+            R.id.jmiCerrarSesion->{
+                val formulario= Intent(this,ActividadIngreso::class.java)
+                startActivity(formulario)
+                this.finish()
+                true
+            }
             R.id.jmiSalir->{
                 objutilidad.SalirSistema(this)
                 true
