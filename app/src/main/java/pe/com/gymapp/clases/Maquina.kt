@@ -12,7 +12,8 @@ class Maquina {
     var nombre:String?=null
     @SerializedName("preciocompra")
     @Expose
-    var preciocompra:Double=0.0
+    var preciocompramaq:Double=0.0
+    @SerializedName("cantidad")
     @Expose
     var cantidad:Double=0.0
     @SerializedName("estado")
@@ -20,12 +21,19 @@ class Maquina {
     var estado:Boolean=false
 
     constructor(){}
-    constructor(idmaquina: Long, nombre: String?, preciocompra: Double, cantidad: Double, estado: Boolean) {
+    constructor(
+        idmaquina: Long,
+        nombre: String?,
+        preciocompramaq: Double,
+        cantidad: Double,
+        estado: Boolean
+    ) {
         this.idmaquina = idmaquina
         this.nombre = nombre
-        this.preciocompra = preciocompra
+        this.preciocompramaq = preciocompramaq
         this.cantidad = cantidad
         this.estado = estado
     }
+
 
 }

@@ -9,13 +9,13 @@ class Genero {
     var idgenero:Long=0
     @SerializedName("genero")
     @Expose
-    var genero:String=""
+    var genero:String?=null
     @SerializedName("estado")
     @Expose
     var estado:Boolean=false
 
     constructor(){}
-    constructor(idgenero: Long, genero: String, estado: Boolean) {
+    constructor(idgenero: Long, genero: String?, estado: Boolean) {
         this.idgenero = idgenero
         this.genero = genero
         this.estado = estado

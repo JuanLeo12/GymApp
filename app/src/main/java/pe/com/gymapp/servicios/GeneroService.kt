@@ -13,7 +13,7 @@ interface GeneroService {
     fun MostrarGeneroPersonalizado(): Call<List<Genero>?>?
 
     @POST("genero")
-    fun RegistrarGenero(@Body c: Genero?): Call<Genero?>?
+    fun RegistrarGenero(@Body g: Genero?): Call<Genero?>?
 
     @PUT("genero/{id}")
     fun ActualizarGenero(@Path("id") id:Long, @Body g: Genero?): Call<Genero?>?

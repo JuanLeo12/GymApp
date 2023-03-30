@@ -12,7 +12,7 @@ interface ClienteService {
     fun MostrarClientePersonalizado(): Call<List<Cliente>?>?
 
     @POST("cliente")
-    fun RegistrarCliente(@Body r: Cliente?): Call<Cliente?>?
+    fun RegistrarCliente(@Body c: Cliente?): Call<Cliente?>?
 
     @PUT("cliente/{id}")
     fun ActualizarCliente(@Path("id") id:Long, @Body r: Cliente?): Call<Cliente?>?

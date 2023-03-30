@@ -16,7 +16,6 @@ import pe.com.gymapp.adaptadores.AdaptadorEmpleado
 import pe.com.gymapp.clases.Empleado
 import pe.com.gymapp.clases.Genero
 import pe.com.gymapp.clases.Rol
-import pe.com.gymapp.databinding.FragmentoEmpleadoBinding
 import pe.com.gymapp.remoto.ApiUtil
 import pe.com.gymapp.servicios.EmpleadoService
 import pe.com.gymapp.servicios.GeneroService
@@ -43,7 +42,7 @@ class FragmentoEmpleado : Fragment() {
     private lateinit var btnEliminar: Button
     private lateinit var lstEmp: ListView
 
-    //cremamos un objeto de la clase categoria
+    //cremamos un objeto de la clase
     private val objgenero=Genero()
     private val objrol= Rol()
     private val objempleado=Empleado()
@@ -62,8 +61,10 @@ class FragmentoEmpleado : Fragment() {
     private var nomrol=""
     private var est=false
     private var fila=-1
-    private var indice=-1
-    private var pos=-1
+    private var indicegen=-1
+    private var indicerol=-1
+    private var posgen=-1
+    private var posrol=-1
 
 
     private var dialogo: AlertDialog.Builder?=null
@@ -164,11 +165,12 @@ class FragmentoEmpleado : Fragment() {
                 telf=txtTelfEmp.text.toString()
                 corr=txtCorrEmp.text.toString()
                 dir=txtDirEmp.text.toString()
-                pos=spRolEmp.selectedItemPosition
-                codrol= (registrorol as ArrayList<Rol>).get(pos).idrol
-                nomrol= (registrorol as ArrayList<Rol>).get(pos).rol.toString()
-                idgen=(registrogenero as ArrayList<Genero>).get(pos).idgenero
-                gen= (registrogenero as ArrayList<Genero>).get(pos).genero
+                posrol=spRolEmp.selectedItemPosition
+                codrol= (registrorol as ArrayList<Rol>).get(posrol).idrol
+                nomrol= (registrorol as ArrayList<Rol>).get(posrol).rol.toString()
+                posgen=spGenEmp.selectedItemPosition
+                idgen=(registrogenero as ArrayList<Genero>).get(posgen).idgenero
+                gen= (registrogenero as ArrayList<Genero>).get(posgen).genero.toString()
                 est=if(chkEstEmp.isChecked){
                     true
                 }else{
@@ -193,6 +195,7 @@ class FragmentoEmpleado : Fragment() {
 
                 //llamamos a la funcion para registrar
                 RegistrarEmpleado(raiz.context,objempleado)
+                objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmEmpleado) as ViewGroup)
                 val fempleado=FragmentoEmpleado()
                 DialogoCRUD("Registro de Empleado","Se registro el empleado correctamente",fempleado)
             }
@@ -207,18 +210,19 @@ class FragmentoEmpleado : Fragment() {
             txtApMatEmp.setText(""+ (registroempleado as ArrayList<Empleado>).get(fila).apematerno)
             txtTelfEmp.setText(""+ (registroempleado as ArrayList<Empleado>).get(fila).telefono)
             txtCorrEmp.setText(""+ (registroempleado as ArrayList<Empleado>).get(fila).correo)
+            txtDirEmp.setText(""+ (registroempleado as ArrayList<Empleado>).get(fila).direccion)
             for(x in (registrorol as ArrayList<Rol>).indices){
                 if((registrorol as ArrayList<Rol>).get(x).rol== (registroempleado as ArrayList<Empleado>).get(fila).rol?.rol){
-                    indice=x
+                    indicerol=x
                 }
             }
-            spRolEmp.setSelection(indice)
+            spRolEmp.setSelection(indicerol)
             for(x in (registrogenero as ArrayList<Genero>).indices){
                 if((registrogenero as ArrayList<Genero>).get(x).genero== (registroempleado as ArrayList<Empleado>).get(fila).genero?.genero){
-                    indice=x
+                    indicegen=x
                 }
             }
-            spGenEmp.setSelection(indice)
+            spGenEmp.setSelection(indicegen)
             if((registroempleado as ArrayList<Empleado>).get(fila).estado){
                 chkEstEmp.setChecked(true)
             }else{
@@ -236,11 +240,12 @@ class FragmentoEmpleado : Fragment() {
                 telf=txtTelfEmp.text.toString()
                 corr=txtCorrEmp.text.toString()
                 dir=txtDirEmp.text.toString()
-                pos=spRolEmp.selectedItemPosition
-                codrol= (registrorol as ArrayList<Rol>).get(pos).idrol
-                nomrol= (registrorol as ArrayList<Rol>).get(pos).rol.toString()
-                idgen=(registrogenero as ArrayList<Genero>).get(pos).idgenero
-                gen= (registrogenero as ArrayList<Genero>).get(pos).genero
+                posrol=spRolEmp.selectedItemPosition
+                codrol= (registrorol as ArrayList<Rol>).get(posrol).idrol
+                nomrol= (registrorol as ArrayList<Rol>).get(posrol).rol.toString()
+                posgen=spGenEmp.selectedItemPosition
+                idgen=(registrogenero as ArrayList<Genero>).get(posgen).idgenero
+                gen= (registrogenero as ArrayList<Genero>).get(posgen).genero.toString()
                 est=if(chkEstEmp.isChecked){
                     true
                 }else{
@@ -266,6 +271,7 @@ class FragmentoEmpleado : Fragment() {
 
                 //llamamos a la funcion para registrar
                 ActualizarEmpleado(raiz.context,objempleado,cod)
+                objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmEmpleado) as ViewGroup)
                 val fempleado=FragmentoEmpleado()
                 DialogoCRUD("Actualizacion de Empleado","Se actualizo el empleado correctamente",fempleado)
             }else{

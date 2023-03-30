@@ -12,7 +12,7 @@ interface EmpleadoService {
     fun MostrarEmpleadoPersonalizado(): Call<List<Empleado>?>?
 
     @POST("empleado")
-    fun RegistrarEmpleado(@Body r: Empleado?): Call<Empleado?>?
+    fun RegistrarEmpleado(@Body e: Empleado?): Call<Empleado?>?
 
     @PUT("empleado/{id}")
     fun ActualizarEmpleado(@Path("id") id:Long, @Body r: Empleado?): Call<Empleado?>?

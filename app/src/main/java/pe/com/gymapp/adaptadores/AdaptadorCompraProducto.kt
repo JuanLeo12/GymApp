@@ -8,8 +8,6 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import pe.com.gymapp.R
 import pe.com.gymapp.clases.CompraProducto
-import pe.com.gymapp.clases.Producto
-import pe.com.gymapp.clases.Proveedor
 
 class AdaptadorCompraProducto (context: Context?, private val listacompraproducto:List<CompraProducto>?):
     BaseAdapter() {

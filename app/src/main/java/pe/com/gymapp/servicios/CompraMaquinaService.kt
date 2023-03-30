@@ -6,10 +6,10 @@ import retrofit2.http.*
 
 interface CompraMaquinaService {
     @GET("compraMaquina")
-    fun MostrarComprarMaquina(): Call<List<CompraMaquina>?>?
+    fun MostrarCompraMaquina(): Call<List<CompraMaquina>?>?
 
     @POST("compraMaquina")
-    fun RegistrarCompraMaquina(@Body r: CompraMaquina?): Call<CompraMaquina?>?
+    fun RegistrarCompraMaquina(@Body cm: CompraMaquina?): Call<CompraMaquina?>?
 
     @PUT("compraMaquina/{id}")
     fun ActualizarCompraMaquina(@Path("id") id:Long, @Body r: CompraMaquina?): Call<CompraMaquina?>?

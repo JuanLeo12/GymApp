@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/lstCodVen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="lstCodVen" />
+
+        <TextView
+            android:id="@+id/lstProVen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="lstProVen" />
+
+        <TextView
+            android:id="@+id/lstCliVen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="lstCliVen" />
+
+        <TextView
+            android:id="@+id/lstTPVen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="lstTPVen" />
+
+        <TextView
+            android:id="@+id/lstEmpVen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="lstEmpVen" />
+
+        <TextView
+            android:id="@+id/lstCanVen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="lstCanVen" />
+
+        <TextView
+            android:id="@+id/lstPrecVenta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="lstPrecVenta" />
+
+        <TextView
+            android:id="@+id/lstTotVen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="lstTotVen" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

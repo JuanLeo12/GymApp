@@ -138,7 +138,8 @@
             <ListView
                 android:id="@+id/lstUsu"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:listSelector="@color/purple_200" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

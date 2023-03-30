@@ -96,7 +96,7 @@ class FragmentoMaquina : Fragment() {
                 }
                 //enviamos los valores a la clase
                 objmaquina.nombre=nom
-                objmaquina.preciocompra=precom
+                objmaquina.preciocompramaq=precom
                 objmaquina.cantidad=can
                 objmaquina.estado=est
                 //llamamos al metodo para registrar
@@ -115,7 +115,7 @@ class FragmentoMaquina : Fragment() {
             //asignamos los valores a cada control
             lblCodMaq.setText(""+(registromaquina as ArrayList<Maquina>).get(fila).idmaquina)
             txtNomMaq.setText(""+(registromaquina as ArrayList<Maquina>).get(fila).nombre)
-            txtPreComMaq.setText(""+(registromaquina as ArrayList<Maquina>).get(fila).preciocompra)
+            txtPreComMaq.setText(""+(registromaquina as ArrayList<Maquina>).get(fila).preciocompramaq)
             txtCanMaq.setText(""+(registromaquina as ArrayList<Maquina>).get(fila).cantidad)
             if((registromaquina as ArrayList<Maquina>).get(fila).estado){
                 chkEstMaq.setChecked(true)
@@ -137,7 +137,7 @@ class FragmentoMaquina : Fragment() {
                 }
                 objmaquina.idmaquina=cod
                 objmaquina.nombre=nom
-                objmaquina.preciocompra=precom
+                objmaquina.preciocompramaq=precom
                 objmaquina.cantidad=can
                 objmaquina.estado=est
 

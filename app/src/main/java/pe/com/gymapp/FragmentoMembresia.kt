@@ -100,10 +100,7 @@ class FragmentoMembresia : Fragment() {
                 objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmMembresia) as ViewGroup)
                 //actualizamos el fragmento
                 val fmembresia=FragmentoMembresia()
-                ft=fragmentManager?.beginTransaction()
-                ft?.replace(R.id.contenedor,fmembresia,null)
-                ft?.addToBackStack(null)
-                ft?.commit()
+                DialogoCRUD("Registro de Membresía","Se registro la membresía correctamente",fmembresia)
             }
         }
 
@@ -194,7 +191,7 @@ class FragmentoMembresia : Fragment() {
         call!!.enqueue(object : Callback<Membresia?> {
             override fun onResponse(call: Call<Membresia?>, response: Response<Membresia?>) {
                 if(response.isSuccessful){
-                    objutilidad.MensajeToast(context!!,"Se registro la membresia")
+                    Log.e("mensaje","Se registró")
                 }
             }
 

@@ -43,7 +43,7 @@ class AdaptadorMaquina (context: Context?, private val listamaquina:List<Maquina
             //agregamos valores a los contrales
             lstCodMaq.text = "" + objmaquina.idmaquina
             lstNomMaq.text = "" + objmaquina.nombre
-            lstPreComMaq.text="" + objmaquina.preciocompra
+            lstPreComMaq.text="" + objmaquina.preciocompramaq
             lstCantMaq.text = "" + objmaquina.cantidad.toInt()
             if (objmaquina.estado == true) {
                 lstEstMaq.text = "Habilitado"

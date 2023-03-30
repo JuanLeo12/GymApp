@@ -24,13 +24,13 @@ class Cliente {
     var correo:String?=null
     @SerializedName("genero")
     @Expose
-    var genero:String?=null
+    var genero:Genero?=null
     @SerializedName("direccion")
     @Expose
     var direccion:String?=null
     @SerializedName("membresia")
     @Expose
-    var membresia:String?=null
+    var membresia:Membresia?=null
     @SerializedName("estado")
     @Expose
     var estado:Boolean=false
@@ -43,9 +43,9 @@ class Cliente {
         apematerno: String?,
         telefono: String?,
         correo: String?,
-        genero: String?,
+        genero: Genero?,
         direccion: String?,
-        membresia: String?,
+        membresia: Membresia?,
         estado: Boolean
     ) {
         this.idcliente = idcliente
@@ -59,5 +59,6 @@ class Cliente {
         this.membresia = membresia
         this.estado = estado
     }
+
 
 }

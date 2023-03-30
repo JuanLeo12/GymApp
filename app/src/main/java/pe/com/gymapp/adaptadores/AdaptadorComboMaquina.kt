@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import pe.com.gymapp.R
-import pe.com.gymapp.clases.Producto
+import pe.com.gymapp.clases.Maquina
 
-class AdaptadorComboProducto (context: Context?, private val listaproducto:List<Producto>?) :
+class AdaptadorComboMaquina (context: Context?, private val listamaquina:List<Maquina>?) :
     BaseAdapter() {
     private val layoutInflater: LayoutInflater
 
@@ -18,11 +18,11 @@ class AdaptadorComboProducto (context: Context?, private val listaproducto:List<
     }
 
     override fun getCount(): Int {
-        return listaproducto!!.size
+        return listamaquina!!.size
     }
 
     override fun getItem(p0: Int): Any {
-        return listaproducto!![p0]
+        return listamaquina!![p0]
     }
 
     override fun getItemId(p0: Int): Long {
@@ -32,13 +32,13 @@ class AdaptadorComboProducto (context: Context?, private val listaproducto:List<
     override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
         var vista=p1
         if(vista==null){
-            vista=layoutInflater.inflate(R.layout.elemento_combo_producto,p2,false)
-            val objproducto=getItem(p0) as Producto
+            vista=layoutInflater.inflate(R.layout.elemento_combo_maquina,p2,false)
+            val objmaquina=getItem(p0) as Maquina
             //creamos los controles
-            val lblNomProd= vista!!.findViewById<TextView>(R.id.lblNomProd)
+            val lblNomMaq= vista!!.findViewById<TextView>(R.id.lblNomMaq)
 
             //agregamos los valores a la lista
-            lblNomProd.text=""+objproducto.nombre
+            lblNomMaq.text=""+objmaquina.nombre
         }
         return vista!!
     }

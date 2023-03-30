@@ -34,7 +34,7 @@ class FragmentoCompraProducto : Fragment() {
     private lateinit var btnActualizar: Button
     private lateinit var lstComPro: ListView
 
-    val objcompraproducto= CompraProducto()
+    private val objcompraproducto= CompraProducto()
 
     private val objproducto=Producto()
     private val objproveedor=Proveedor()

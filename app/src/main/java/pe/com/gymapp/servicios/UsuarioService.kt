@@ -12,7 +12,7 @@ interface UsuarioService {
     fun MostrarUsuarioPersonalizado(): Call<List<Usuario>?>?
 
     @POST("usuario")
-    fun RegistrarUsuario(@Body r: Usuario?): Call<Usuario?>?
+    fun RegistrarUsuario(@Body u: Usuario?): Call<Usuario?>?
 
     @PUT("usuario/{id}")
     fun ActualizarUsuario(@Path("id") id:Long, @Body r: Usuario?): Call<Usuario?>?

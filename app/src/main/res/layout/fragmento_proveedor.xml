@@ -226,7 +226,8 @@
             <ListView
                 android:id="@+id/lstProv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:listSelector="@color/purple_200" />
         </LinearLayout>
 
     </LinearLayout>
