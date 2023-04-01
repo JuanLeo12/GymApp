@@ -18,6 +18,11 @@ import pe.com.gymapp.utilidad.Util
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class FragmentoIncidencia : Fragment() {
@@ -35,8 +40,9 @@ class FragmentoIncidencia : Fragment() {
     private val objcliente= Cliente()
     private val objempleado= Empleado()
 
+
     private var cod=0L
-    private var fech=""
+    private var fech= ""
     private var desc=""
     private var cli=""
     private var emp=""
@@ -110,7 +116,7 @@ class FragmentoIncidencia : Fragment() {
                 spCliInc.requestFocus()
             }else{
                 //capturando valores
-                fech= txtFechaInc.text.toString()
+                fech=txtFechaInc.text.toString()
                 desc= txtDescInc.text.toString()
                 poscli=spCliInc.selectedItemPosition
                 cli= (registroCliente as ArrayList<Cliente>).get(poscli).nombre.toString()

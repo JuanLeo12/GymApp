@@ -46,8 +46,10 @@ class FragmentoCompraProducto : Fragment() {
     private var codprod=0L
     private var codprov=0L
     private var fila=-1
-    private var indice=-1
-    private var pos=-1
+    private var indiceprod=-1
+    private var indiceprov=-1
+    private var posprod=-1
+    private var posprov=-1
 
     private var compraProductoService: CompraProductoService?=null
     private var registrocompraProducto:List<CompraProducto>?=null
@@ -108,11 +110,12 @@ class FragmentoCompraProducto : Fragment() {
             }else{
                 //capturando valores
                 cant= txtCantComPro.text.toString().toInt()
-                pos=spProComPro.selectedItemPosition
-                prod= (registroproducto as ArrayList<Producto>).get(pos).nombre.toString()
-                prov= (registroproveedor as ArrayList<Proveedor>).get(pos).nombre.toString()
-                codprod= (registroproducto as ArrayList<Producto>).get(pos).idproducto
-                codprov= (registroproveedor as ArrayList<Proveedor>).get(pos).idproveedor
+                posprod=spProComPro.selectedItemPosition
+                prod= (registroproducto as ArrayList<Producto>).get(posprod).nombre.toString()
+                codprod= (registroproducto as ArrayList<Producto>).get(posprod).idproducto
+                posprov=spProvComPro.selectedItemPosition
+                prov= (registroproveedor as ArrayList<Proveedor>).get(posprov).nombre.toString()
+                codprov= (registroproveedor as ArrayList<Proveedor>).get(posprov).idproveedor
 
 
                 //enviamos los valores a la clase
@@ -140,16 +143,16 @@ class FragmentoCompraProducto : Fragment() {
             txtCantComPro.setText(""+ (registrocompraProducto as ArrayList<CompraProducto>).get(fila).cantidad.toInt())
             for(x in (registroproducto as ArrayList<Producto>).indices){
                 if((registroproducto as ArrayList<Producto>).get(x).nombre== (registrocompraProducto as ArrayList<CompraProducto>).get(fila).producto?.nombre){
-                    indice=x
+                    indiceprod=x
                 }
             }
-            spProComPro.setSelection(indice)
+            spProComPro.setSelection(indiceprod)
             for(x in (registroproveedor as ArrayList<Proveedor>).indices){
                 if((registroproveedor as ArrayList<Proveedor>).get(x).nombre== (registrocompraProducto as ArrayList<CompraProducto>).get(fila).proveedor?.nombre){
-                    indice=x
+                    indiceprov=x
                 }
             }
-            spProComPro.setSelection(indice)
+            spProComPro.setSelection(indiceprov)
         }
 
         btnActualizar.setOnClickListener {
@@ -157,11 +160,12 @@ class FragmentoCompraProducto : Fragment() {
                 //capturando valores
                 cod=lblCodCPro.text.toString().toLong()
                 cant= txtCantComPro.text.toString().toInt()
-                pos=spProComPro.selectedItemPosition
-                prod= (registroproducto as ArrayList<Producto>).get(pos).nombre.toString()
-                prov= (registroproveedor as ArrayList<Proveedor>).get(pos).nombre.toString()
-                codprod= (registroproducto as ArrayList<Producto>).get(pos).idproducto
-                codprov= (registroproveedor as ArrayList<Proveedor>).get(pos).idproveedor
+                posprod=spProComPro.selectedItemPosition
+                prod= (registroproducto as ArrayList<Producto>).get(posprod).nombre.toString()
+                codprod= (registroproducto as ArrayList<Producto>).get(posprod).idproducto
+                posprov=spProvComPro.selectedItemPosition
+                prov= (registroproveedor as ArrayList<Proveedor>).get(posprov).nombre.toString()
+                codprov= (registroproveedor as ArrayList<Proveedor>).get(posprov).idproveedor
 
                 //enviamos los valores a la clase
                 objcompraproducto.idcomppro=cod
