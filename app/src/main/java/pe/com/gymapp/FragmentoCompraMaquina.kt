@@ -63,7 +63,7 @@ class FragmentoCompraMaquina : Fragment() {
 
     private var dialogo: AlertDialog.Builder?=null
 
-    private var _binding: FragmentoProducto?=null
+    private var _binding: FragmentoCompraMaquina?=null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -115,7 +115,6 @@ class FragmentoCompraMaquina : Fragment() {
 
                 //enviamos los valores a la clase
                 objcompramaquina.cantidad=cant.toDouble()
-                objcompramaquina.idcompmaq=cod
 
                 objmaquina.idmaquina=codmaq
                 objcompramaquina.maquina=objmaquina

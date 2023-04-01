@@ -44,4 +44,7 @@ object ApiUtil {
 
     val ventaService: VentaService?
         get() =RetrofitClient.getClient(API_URl)?.create(VentaService::class.java)
+
+    val incidenciaService: IncidenciaService?
+        get() =RetrofitClient.getClient(API_URl)?.create(IncidenciaService::class.java)
 }

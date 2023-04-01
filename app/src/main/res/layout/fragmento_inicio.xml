@@ -6,15 +6,230 @@
     android:layout_height="match_parent"
     tools:context=".FragmentoInicio">
 
-    <TextView
-        android:id="@+id/textview_first"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bienvenidos a GymApp"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="79dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textview_first"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Bienvenidos a GymApp"
+                    android:textAlignment="center"
+                    android:textSize="34sp"
+                    android:textStyle="bold|italic" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="217dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="150dp"
+                    android:layout_height="170dp"
+                    android:layout_weight="1"
+                    android:src="@mipmap/logogym" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="29dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView77"
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/textView71"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Misión"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="123dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView80"
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/textView72"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Brindar un lugar agradable, espacioso y seguro para la realización de todo tipo de deportes con máquinas. Y, además, ofrecer un rumbo claro hacia los objetivos corporales de sus clientes con instructores y entrenadores personales especializados en la materia."
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="31dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView79"
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/textView73"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Visión"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="89dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView81"
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/textView74"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Construir mas sedes a lo largo del Perú y convertirse en una marca reconocida por brindar una atención eficiente y agradable a todos los clientes."
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView82"
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/textView75"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Antecedentes de la empresa"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="109dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView83"
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/textView76"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="El gimnasio “Athletic Fisio Perú” nació hace 21 años (01/06/2000) como un pequeño negocio familiar. Su primer salón para el uso de máquinas, tenía un espacio de 49 mt2 aprox, y este mismo estaba ubicado justo al lado de la casa de la familia. "
+                    android:textAlignment="viewStart"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="92dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView85"
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/textView84"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="La administración en un inicio, estaba a cargo de los 4 hermanos Gutarra junto la madre, no obstante, con el tiempo el hermano mayor (y dueño actual) llamado Abel Emil Gutarra Goytendia tomó el control total del negocio."
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="127dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView86"
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/textView87"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="La pandemia originada por el Covid-19, afecto en gran medida los ingresos que tenía el negocio. La cantidad de membresías al mes, se redujeron en un 80%, y después de un año, el gimnasio aún no ha recuperado los números que alguna vez sostuvieron en la prepandemia."
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="275dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView89"
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/textView88"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hoy en día, “Athletic Fisio Perú” cuenta con 2 sedes. La principal (y la enfocada para el proyecto) está ubicada en la calle “Alfonso Covian Mz H LT. 18 Urb. Alfonso Cobian-Chaclacayo-Lima-Lima”. Esta posee 3 tres pisos, el primer y el segundo contienen varias máquinas como: 2 Caminadoras, 1 banca press, 2 bancas abdominales,1 saco de box, entre otros., y el tercero, esta especializado en baile. La secretaria y recepción esta en las manos de una persona. El gimnasio esta abierto desde el Lunes hasta el Sábado, y para la instrucción de máquinas, se tiene a dos jóvenes profesionales especializados en nutrición y deportes; uno está encargado del turno mañana (7:00 am hasta 1:00pm), y el otro, del turno tarde (4:00 pm hasta 10:00pm)."
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="95dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView91"
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/textView90"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Para la limpieza diaria de las máquinas y los 2 baños, se tiene a una encargada. Para las clases de baile, se tiene a un encargado, y, por último, como “Personal Trainer”, se tiene al mismo gerente del negocio."
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
