@@ -160,7 +160,7 @@ class FragmentoMaquina : Fragment() {
                 EliminarMaquina(raiz.context,cod)
                 objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmMaquina) as ViewGroup)
                 val fmaquina=FragmentoMaquina()
-                DialogoCRUD("Eliminación de Maquina","Se eliminó la Máquina",fmaquina)
+                DialogoEliminar("Eliminación de Maquina","¿Desea eliminar la máquina?",fmaquina)
             }else{
                 objutilidad.MensajeToast(raiz.context,"Seleccione un elemento de la lista")
                 lstMaq.requestFocus()
@@ -260,6 +260,25 @@ class FragmentoMaquina : Fragment() {
             ft?.replace(R.id.contenedor,fragmento,null)
             ft?.addToBackStack(null)
             ft?.commit()
+        }
+        dialogo!!.show()
+    }
+
+
+    fun DialogoEliminar(titulo:String,mensaje:String,fragmento:Fragment){
+        dialogo= AlertDialog.Builder(context)
+        dialogo!!.setTitle(titulo)
+        dialogo!!.setMessage(mensaje)
+        dialogo!!.setCancelable(false)
+        dialogo!!.setPositiveButton("Si"){
+                dialog,which->
+            ft=fragmentManager?.beginTransaction()
+            ft?.replace(R.id.contenedor,fragmento,null)
+            ft?.addToBackStack(null)
+            ft?.commit()
+        }
+        dialogo!!.setNegativeButton("No"){
+                dialog,which->
         }
         dialogo!!.show()
     }

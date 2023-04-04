@@ -169,7 +169,7 @@ class FragmentoProducto : Fragment() {
                 EliminarProducto(raiz.context,cod)
                 objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmProducto) as ViewGroup)
                 val fproducto=FragmentoProducto()
-                DialogoCRUD("Eliminación de Producto","Se eliminó el Producto",fproducto)
+                DialogoEliminar("Eliminación de Producto","¿Desea eliminar el producto?",fproducto)
             }else{
                 objutilidad.MensajeToast(raiz.context,"Seleccione un elemento de la lista")
                 lstPro.requestFocus()
@@ -269,6 +269,26 @@ class FragmentoProducto : Fragment() {
         }
         dialogo!!.show()
     }
+
+
+    fun DialogoEliminar(titulo:String,mensaje:String,fragmento:Fragment){
+        dialogo= AlertDialog.Builder(context)
+        dialogo!!.setTitle(titulo)
+        dialogo!!.setMessage(mensaje)
+        dialogo!!.setCancelable(false)
+        dialogo!!.setPositiveButton("Si"){
+                dialog,which->
+            ft=fragmentManager?.beginTransaction()
+            ft?.replace(R.id.contenedor,fragmento,null)
+            ft?.addToBackStack(null)
+            ft?.commit()
+        }
+        dialogo!!.setNegativeButton("No"){
+                dialog,which->
+        }
+        dialogo!!.show()
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

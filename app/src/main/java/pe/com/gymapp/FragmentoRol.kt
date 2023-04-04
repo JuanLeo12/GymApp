@@ -150,8 +150,8 @@ class FragmentoRol : Fragment() {
 
                 EliminarRol(raiz.context,cod)
                 objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmRol) as ViewGroup)
-                val fcategoria=FragmentoRol()
-                DialogoCRUD("Eliminación de Rol","Se eliminó el Rol",fcategoria)
+                val frol=FragmentoRol()
+                DialogoEliminar("Eliminación de Rol","¿Desea eliminar el rol?",frol)
             }else{
                 objutilidad.MensajeToast(raiz.context,"Seleccione un elemento de la lista")
                 lstRol.requestFocus()
@@ -251,6 +251,24 @@ class FragmentoRol : Fragment() {
         dialogo!!.show()
     }
 
+
+    fun DialogoEliminar(titulo:String,mensaje:String,fragmento:Fragment){
+        dialogo= AlertDialog.Builder(context)
+        dialogo!!.setTitle(titulo)
+        dialogo!!.setMessage(mensaje)
+        dialogo!!.setCancelable(false)
+        dialogo!!.setPositiveButton("Si"){
+                dialog,which->
+            ft=fragmentManager?.beginTransaction()
+            ft?.replace(R.id.contenedor,fragmento,null)
+            ft?.addToBackStack(null)
+            ft?.commit()
+        }
+        dialogo!!.setNegativeButton("No"){
+                dialog,which->
+        }
+        dialogo!!.show()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -173,7 +173,7 @@ class FragmentoProveedor : Fragment() {
                 EliminarProveedor(raiz.context,cod)
                 objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmProveedor) as ViewGroup)
                 val fproveedor=FragmentoProveedor()
-                DialogoCRUD("Eliminación de Proveedor","Se eliminó el Proveedor",fproveedor)
+                DialogoEliminar("Eliminación de Proveedor","¿Desea eliminar el proveedor?",fproveedor)
             }else{
                 objutilidad.MensajeToast(raiz.context,"Seleccione un elemento de la lista")
                 lstProv.requestFocus()
@@ -270,6 +270,24 @@ class FragmentoProveedor : Fragment() {
             ft?.replace(R.id.contenedor,fragmento,null)
             ft?.addToBackStack(null)
             ft?.commit()
+        }
+        dialogo!!.show()
+    }
+
+    fun DialogoEliminar(titulo:String,mensaje:String,fragmento:Fragment){
+        dialogo= AlertDialog.Builder(context)
+        dialogo!!.setTitle(titulo)
+        dialogo!!.setMessage(mensaje)
+        dialogo!!.setCancelable(false)
+        dialogo!!.setPositiveButton("Si"){
+                dialog,which->
+            ft=fragmentManager?.beginTransaction()
+            ft?.replace(R.id.contenedor,fragmento,null)
+            ft?.addToBackStack(null)
+            ft?.commit()
+        }
+        dialogo!!.setNegativeButton("No"){
+                dialog,which->
         }
         dialogo!!.show()
     }
