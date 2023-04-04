@@ -70,12 +70,6 @@
                 android:hint="Ingrese la descripción"
                 android:inputType="textPersonName" />
 
-            <TextView
-                android:id="@+id/lblCodInc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="lblCodInc" />
         </LinearLayout>
 
         <LinearLayout
@@ -98,6 +92,13 @@
                 android:ems="10"
                 android:hint="Ingrese la fecha"
                 android:inputType="date" />
+
+            <TextView
+                android:id="@+id/lblCodInc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="lblCodInc" />
 
         </LinearLayout>
 
