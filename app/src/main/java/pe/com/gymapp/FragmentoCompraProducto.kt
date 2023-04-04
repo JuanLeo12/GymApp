@@ -132,7 +132,7 @@ class FragmentoCompraProducto : Fragment() {
                 objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmCompProd) as ViewGroup)
                 //actualizamos el fragmento
                 val fcompproducto=FragmentoCompraProducto()
-                DialogoCRUD("Registro de Compra de Producto","Se registró la compra corrrectamente",fcompproducto)
+                DialogoRegistrar("Registro de Compra de Producto","¿Está seguro de registrar la compra?, no se podrá modificar los datos",fcompproducto)
             }
         }
 
@@ -265,7 +265,7 @@ class FragmentoCompraProducto : Fragment() {
         call!!.enqueue(object : Callback<CompraProducto?> {
             override fun onResponse(call: Call<CompraProducto?>, response: Response<CompraProducto?>) {
                 if(response.isSuccessful){
-                    objutilidad.MensajeToast(context!!,"Se registro la compra del producto")
+                    Log.e("mensaje","Se registró")
                 }
             }
 
@@ -308,6 +308,24 @@ class FragmentoCompraProducto : Fragment() {
             ft?.replace(R.id.contenedor,fragmento,null)
             ft?.addToBackStack(null)
             ft?.commit()
+        }
+        dialogo!!.show()
+    }
+
+    fun DialogoRegistrar(titulo:String,mensaje:String,fragmento:Fragment){
+        dialogo=AlertDialog.Builder(context)
+        dialogo!!.setTitle(titulo)
+        dialogo!!.setMessage(mensaje)
+        dialogo!!.setCancelable(false)
+        dialogo!!.setPositiveButton("Si"){
+                dialog,which->
+            ft=fragmentManager?.beginTransaction()
+            ft?.replace(R.id.contenedor,fragmento,null)
+            ft?.addToBackStack(null)
+            ft?.commit()
+        }
+        dialogo!!.setNegativeButton("No"){
+                dialog,which->
         }
         dialogo!!.show()
     }

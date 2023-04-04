@@ -126,7 +126,7 @@ class FragmentoCompraMaquina : Fragment() {
                 objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmCompMaq) as ViewGroup)
                 //actualizamos el fragmento
                 val fcompmaq=FragmentoCompraMaquina()
-                DialogoCRUD("Registro de Compra de Máquina","Se registró la compra corrrectamente",fcompmaq)
+                DialogoRegistrar("Registro de Compra de Máquina","¿Está seguro de registrar la compra?, no se podrá modificar los datos",fcompmaq)
             }
         }
 
@@ -260,7 +260,7 @@ class FragmentoCompraMaquina : Fragment() {
         call!!.enqueue(object : Callback<CompraMaquina?> {
             override fun onResponse(call: Call<CompraMaquina?>, response: Response<CompraMaquina?>) {
                 if(response.isSuccessful){
-                    objutilidad.MensajeToast(context!!,"Se registro la compra de la máquina")
+                    Log.e("mensaje","Se registró")
                 }
             }
 
@@ -303,6 +303,24 @@ class FragmentoCompraMaquina : Fragment() {
             ft?.replace(R.id.contenedor,fragmento,null)
             ft?.addToBackStack(null)
             ft?.commit()
+        }
+        dialogo!!.show()
+    }
+
+    fun DialogoRegistrar(titulo:String,mensaje:String,fragmento:Fragment){
+        dialogo=AlertDialog.Builder(context)
+        dialogo!!.setTitle(titulo)
+        dialogo!!.setMessage(mensaje)
+        dialogo!!.setCancelable(false)
+        dialogo!!.setPositiveButton("Si"){
+                dialog,which->
+            ft=fragmentManager?.beginTransaction()
+            ft?.replace(R.id.contenedor,fragmento,null)
+            ft?.addToBackStack(null)
+            ft?.commit()
+        }
+        dialogo!!.setNegativeButton("No"){
+                dialog,which->
         }
         dialogo!!.show()
     }

@@ -170,7 +170,7 @@ class FragmentoVenta : Fragment() {
                 objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmVenta) as ViewGroup)
                 //actualizamos el fragmento
                 val fventa=FragmentoVenta()
-                DialogoCRUD("Registro de Venta","Se registró la venta corrrectamente",fventa)
+                DialogoRegistrar("Registro de Venta","¿Está seguro de registrar la Venta?, no se podrá modificar los datos",fventa)
             }
         }
 
@@ -429,6 +429,24 @@ class FragmentoVenta : Fragment() {
             ft?.replace(R.id.contenedor,fragmento,null)
             ft?.addToBackStack(null)
             ft?.commit()
+        }
+        dialogo!!.show()
+    }
+
+    fun DialogoRegistrar(titulo:String,mensaje:String,fragmento:Fragment){
+        dialogo=AlertDialog.Builder(context)
+        dialogo!!.setTitle(titulo)
+        dialogo!!.setMessage(mensaje)
+        dialogo!!.setCancelable(false)
+        dialogo!!.setPositiveButton("Si"){
+                dialog,which->
+            ft=fragmentManager?.beginTransaction()
+            ft?.replace(R.id.contenedor,fragmento,null)
+            ft?.addToBackStack(null)
+            ft?.commit()
+        }
+        dialogo!!.setNegativeButton("No"){
+                dialog,which->
         }
         dialogo!!.show()
     }
