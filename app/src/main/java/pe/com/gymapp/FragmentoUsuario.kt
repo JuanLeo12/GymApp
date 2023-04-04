@@ -215,7 +215,7 @@ class FragmentoUsuario : Fragment() {
 
     //creamos una funcion para mostrar el combo de la categoria
     fun MostrarComboEmpleado(context: Context?){
-        val call= empleadoService!!.MostrarEmpleado()
+        val call= empleadoService!!.MostrarEmpleadoPersonalizado()
         call!!.enqueue(object : Callback<List<Empleado>?> {
             override fun onResponse(
                 call: Call<List<Empleado>?>,
