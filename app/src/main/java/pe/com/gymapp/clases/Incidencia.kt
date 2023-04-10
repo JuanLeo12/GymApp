@@ -2,6 +2,7 @@ package pe.com.gymapp.clases
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.time.LocalDateTime
 import java.util.Date
 
 class Incidencia {
@@ -19,7 +20,7 @@ class Incidencia {
     var descripcion:String?=null
     @SerializedName("fecha")
     @Expose
-    var fecha:String?=null
+    var fecha: String? =null
 
     constructor(){}
     constructor(

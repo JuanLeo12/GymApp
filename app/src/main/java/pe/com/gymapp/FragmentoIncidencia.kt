@@ -42,7 +42,7 @@ class FragmentoIncidencia : Fragment() {
 
 
     private var cod=0L
-    private var fech= ""
+    private var fech=""
     private var desc=""
     private var cli=""
     private var emp=""
@@ -111,7 +111,7 @@ class FragmentoIncidencia : Fragment() {
 
         //agregamos los eventos
         btnRegistrar.setOnClickListener {
-            if(spCliInc.adapter.toString() =="" || spEmpInc.adapter.toString() =="" || txtDescInc.getText().toString()=="" || txtFechaInc.getText().toString()==""){
+            if(spCliInc.adapter.toString() =="" || spEmpInc.adapter.toString() =="" || txtDescInc.getText().toString()=="" ){
                 objutilidad.MensajeToast(raiz.context,"Faltan Datos")
                 spCliInc.requestFocus()
             }else{

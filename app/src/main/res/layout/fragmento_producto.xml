@@ -202,7 +202,7 @@
                 android:id="@+id/lstPro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:listSelector="@color/purple_200" />
+                android:listSelector="@color/design_default_color_secondary" />
         </LinearLayout>
 
         <LinearLayout

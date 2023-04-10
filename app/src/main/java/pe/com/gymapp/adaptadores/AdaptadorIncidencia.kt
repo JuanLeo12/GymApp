@@ -8,6 +8,7 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import pe.com.gymapp.R
 import pe.com.gymapp.clases.Incidencia
+import java.util.*
 
 class AdaptadorIncidencia (context: Context?, private val listaincidencia:List<Incidencia>?):
     BaseAdapter() {
@@ -45,7 +46,9 @@ class AdaptadorIncidencia (context: Context?, private val listaincidencia:List<I
             lstCliInc.text = "" + objincidencia.cliente!!.nombre
             lstEmpInc.text = "" + objincidencia.empleado!!.nombre
             lstDescInc.text = "" + objincidencia.descripcion
+            objincidencia.fecha=Date().toString()
             lstFechaInc.text = "" + objincidencia.fecha
+
         }
         return vista!!
     }

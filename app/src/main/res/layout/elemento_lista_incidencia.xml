@@ -10,36 +10,36 @@
 
         <TextView
             android:id="@+id/lstCodInc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:text="lstCodInc" />
 
         <TextView
             android:id="@+id/lstCliInc"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:text="lstCliInc" />
 
         <TextView
             android:id="@+id/lstEmpInc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="49dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:text="lstEmpInc" />
 
         <TextView
             android:id="@+id/lstDescInc"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:text="lstDescInc" />
 
         <TextView
             android:id="@+id/lstFechaInc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="124dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:text="lstFechaInc" />
     </LinearLayout>
