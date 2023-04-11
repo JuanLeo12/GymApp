@@ -50,4 +50,7 @@ object ApiUtil {
 
     val mantenimientoService: MantenimientoService?
         get() =RetrofitClient.getClient(API_URl)?.create(MantenimientoService::class.java)
+
+    val seguimientoFisicoService: SeguimientoFisicoService?
+        get() =RetrofitClient.getClient(API_URl)?.create(SeguimientoFisicoService::class.java)
 }

@@ -39,7 +39,7 @@ class ActividadIngreso : AppCompatActivity() {
             }else{
                 usu=txtUsu.getText().toString()
                 cla=txtCla.getText().toString()
-                if(usu.equals("jalbornoz")&&cla.equals("123456")){
+                if(usu.equals("admin")&&cla.equals("admin")){
                     objutilidad.MensajeToast(this,"Bienvenidos al Sistema")
                     val formulario= Intent(this,ActividadPrincipal::class.java)
                     startActivity(formulario)
