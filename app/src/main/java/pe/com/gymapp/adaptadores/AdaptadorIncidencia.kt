@@ -8,6 +8,7 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import pe.com.gymapp.R
 import pe.com.gymapp.clases.Incidencia
+import java.text.SimpleDateFormat
 import java.util.*
 
 class AdaptadorIncidencia (context: Context?, private val listaincidencia:List<Incidencia>?):
@@ -46,9 +47,9 @@ class AdaptadorIncidencia (context: Context?, private val listaincidencia:List<I
             lstCliInc.text = "" + objincidencia.cliente!!.nombre
             lstEmpInc.text = "" + objincidencia.empleado!!.nombre
             lstDescInc.text = "" + objincidencia.descripcion
-            objincidencia.fecha=Date().toString()
-            lstFechaInc.text = "" + objincidencia.fecha
-
+            val fecha = SimpleDateFormat(
+                "yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(objincidencia.fecha)
+            lstFechaInc.text =  SimpleDateFormat("dd/MM/yyyy").format(fecha)
         }
         return vista!!
     }

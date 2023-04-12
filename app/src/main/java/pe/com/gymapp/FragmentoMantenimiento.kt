@@ -19,6 +19,7 @@ import pe.com.gymapp.utilidad.Util
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.collections.ArrayList
 
 class FragmentoMantenimiento : Fragment() {
     private lateinit var spMaqMant: Spinner
@@ -61,12 +62,7 @@ class FragmentoMantenimiento : Fragment() {
     private val objutilidad= Util()
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
 
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -96,7 +92,7 @@ class FragmentoMantenimiento : Fragment() {
 
         //agregamos los eventos
         btnRegistrar.setOnClickListener {
-            if(spMaqMant.adapter.toString() =="" || txtfechMant.getText().toString()==""){
+            if(spMaqMant.adapter.toString() =="" || txtfechMant.text.toString()=="" ){
                 objutilidad.MensajeToast(raiz.context,"Faltan Datos")
                 spMaqMant.requestFocus()
             }else{
@@ -340,4 +336,9 @@ class FragmentoMantenimiento : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
     }
+
+
+
+
+
 }

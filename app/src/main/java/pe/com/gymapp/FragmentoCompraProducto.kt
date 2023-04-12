@@ -317,7 +317,7 @@ class FragmentoCompraProducto : Fragment() {
         dialogo!!.setTitle(titulo)
         dialogo!!.setMessage(mensaje)
         dialogo!!.setCancelable(false)
-        dialogo!!.setPositiveButton("Si"){
+        dialogo!!.setPositiveButton("Sí"){
                 dialog,which->
             ft=fragmentManager?.beginTransaction()
             ft?.replace(R.id.contenedor,fragmento,null)

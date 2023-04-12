@@ -1,31 +1,68 @@
 package pe.com.gymapp
 
+import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
+import androidx.fragment.app.FragmentTransaction
+import pe.com.gymapp.adaptadores.AdaptadorComboCliente
+import pe.com.gymapp.adaptadores.AdaptadorComboEmpleado
+import pe.com.gymapp.adaptadores.AdaptadorIncidencia
+import pe.com.gymapp.clases.AsistenciaCliente
+import pe.com.gymapp.clases.Cliente
+import pe.com.gymapp.clases.Empleado
+import pe.com.gymapp.clases.Incidencia
+import pe.com.gymapp.remoto.ApiUtil
+import pe.com.gymapp.servicios.AsistenciaClienteService
+import pe.com.gymapp.servicios.ClienteService
+import pe.com.gymapp.servicios.EmpleadoService
+import pe.com.gymapp.servicios.IncidenciaService
+import pe.com.gymapp.utilidad.Util
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentoAsistenciaCliente.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FragmentoAsistenciaCliente : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var spCliAsisCli: Spinner
+    private lateinit var btnAsistencia: Button
+
+    private val objAsistenciaCliente= AsistenciaCliente()
+
+    private val objcliente= Cliente()
+
+
+    private var cod=0L
+    private var fech=""
+    private var cli=""
+    private var codcli=0L
+    private var fila=-1
+    private var indicecli=-1
+    private var poscli=-1
+
+    private var dialogo: AlertDialog.Builder?=null
+    private var ft: FragmentTransaction?=null
+
+
+
+    private var asistenciaClienteService: AsistenciaClienteService?=null
+    private var registroAsistenciaCliente:List<AsistenciaCliente>?=null
+
+    private var clienteService: ClienteService?=null
+    private var registroCliente:List<Cliente>?=null
+
+
+    private val objutilidad= Util()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
         }
     }
 
@@ -33,27 +70,131 @@ class FragmentoAsistenciaCliente : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragmento_asistencia_cliente, container, false)
+        val raiz=inflater.inflate(R.layout.fragmento_asistencia_cliente,container,false)
+        //creamos los controles
+        spCliAsisCli=raiz.findViewById(R.id.spCliAsisCli)
+        btnAsistencia=raiz.findViewById(R.id.btnAsistencia)
+
+        registroAsistenciaCliente=ArrayList()
+        registroCliente=ArrayList()
+
+        //implementamos el servicio
+        asistenciaClienteService= ApiUtil.asistenciaClienteService
+        clienteService= ApiUtil.clienteService
+
+        //mostramos las categorias
+        MostrarComboCliente(raiz.context)
+
+        //agregamos los eventos
+        btnAsistencia.setOnClickListener {
+            if(spCliAsisCli.adapter.toString() ==""){
+                objutilidad.MensajeToast(raiz.context,"Faltan Datos")
+                spCliAsisCli.requestFocus()
+            }else{
+                //capturando valores
+                poscli=spCliAsisCli.selectedItemPosition
+                cli= (registroCliente as ArrayList<Cliente>).get(poscli).nombre.toString()
+                codcli= (registroCliente as ArrayList<Cliente>).get(poscli).idcliente
+
+
+                //enviamos los valores a la clase
+                objcliente.idcliente=codcli
+                objAsistenciaCliente.cliente=objcliente
+
+                //llamamos al metodo para registrar
+                RegistrarAsistenciaCliente(raiz.context,objAsistenciaCliente)
+                objutilidad.Limpiar(raiz.findViewById<View>(R.id.frmAsisCliente) as ViewGroup)
+                //actualizamos el fragmento
+                val fasiscli=FragmentoAsistenciaCliente()
+                DialogoCRUD("Asistencia de Cliente","Se registró la asistencia",fasiscli)
+            }
+        }
+
+        return raiz
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentoAsistenciaCliente.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentoAsistenciaCliente().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    fun MostrarComboCliente(context: Context?){
+        val call= clienteService!!.MostrarClientePersonalizado()
+        call!!.enqueue(object : Callback<List<Cliente>?> {
+            override fun onResponse(
+                call: Call<List<Cliente>?>,
+                response: Response<List<Cliente>?>
+            ) {
+                if(response.isSuccessful){
+                    registroCliente=response.body()
+                    spCliAsisCli.adapter= AdaptadorComboCliente(context,registroCliente)
+
+
                 }
             }
+
+            override fun onFailure(call: Call<List<Cliente>?>, t: Throwable) {
+                Log.e("Error: ", t.message!!)
+            }
+
+
+        })
+    }
+
+
+    fun RegistrarAsistenciaCliente(context: Context?, ac: AsistenciaCliente?){
+        val call= asistenciaClienteService!!.RegistrarAsistenciaCliente(ac)
+        call!!.enqueue(object : Callback<AsistenciaCliente?> {
+            override fun onResponse(call: Call<AsistenciaCliente?>, response: Response<AsistenciaCliente?>) {
+                if(response.isSuccessful){
+                    Log.e("mensaje","Se registró")
+                }
+            }
+
+            override fun onFailure(call: Call<AsistenciaCliente?>, t: Throwable) {
+                Log.e("Error: ", t.message!!)
+            }
+
+
+        })
+    }
+
+
+    //creamos una función para los cuadros de dialogo del CRUD
+    fun DialogoCRUD(titulo:String,mensaje:String,fragmento:Fragment){
+        dialogo= AlertDialog.Builder(context)
+        dialogo!!.setTitle(titulo)
+        dialogo!!.setMessage(mensaje)
+        dialogo!!.setCancelable(false)
+        dialogo!!.setPositiveButton("Ok"){
+                dialogo,which->
+            ft=fragmentManager?.beginTransaction()
+            ft?.replace(R.id.contenedor,fragmento,null)
+            ft?.addToBackStack(null)
+            ft?.commit()
+        }
+        dialogo!!.show()
+    }
+
+    fun DialogoRegistrar(titulo:String,mensaje:String,fragmento:Fragment){
+        dialogo=AlertDialog.Builder(context)
+        dialogo!!.setTitle(titulo)
+        dialogo!!.setMessage(mensaje)
+        dialogo!!.setCancelable(false)
+        dialogo!!.setPositiveButton("Sí"){
+                dialog,which->
+            ft=fragmentManager?.beginTransaction()
+            ft?.replace(R.id.contenedor,fragmento,null)
+            ft?.addToBackStack(null)
+            ft?.commit()
+        }
+        dialogo!!.setNegativeButton("No"){
+                dialog,which->
+        }
+        dialogo!!.show()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
     }
 }

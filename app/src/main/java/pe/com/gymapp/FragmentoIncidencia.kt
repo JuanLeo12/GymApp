@@ -28,7 +28,7 @@ import kotlin.collections.ArrayList
 class FragmentoIncidencia : Fragment() {
     private lateinit var spCliInc: Spinner
     private lateinit var spEmpInc: Spinner
-    private lateinit var txtFechaInc: EditText
+    //private lateinit var txtFechaInc: EditText
     private lateinit var txtDescInc: EditText
     private lateinit var lblCodInc: TextView
     private lateinit var btnRegistrar: Button
@@ -88,7 +88,7 @@ class FragmentoIncidencia : Fragment() {
         //creamos los controles
         spCliInc=raiz.findViewById(R.id.spCliInc)
         spEmpInc=raiz.findViewById(R.id.spEmpInc)
-        txtFechaInc=raiz.findViewById(R.id.txtFechaInc)
+        //txtFechaInc=raiz.findViewById(R.id.txtFechaInc)
         txtDescInc=raiz.findViewById(R.id.txtDescInc)
         lblCodInc=raiz.findViewById(R.id.lblCodInc)
         btnRegistrar=raiz.findViewById(R.id.btnRegistrar)
@@ -116,7 +116,7 @@ class FragmentoIncidencia : Fragment() {
                 spCliInc.requestFocus()
             }else{
                 //capturando valores
-                fech=txtFechaInc.text.toString()
+                //fech=txtFechaInc.text.toString()
                 desc= txtDescInc.text.toString()
                 poscli=spCliInc.selectedItemPosition
                 cli= (registroCliente as ArrayList<Cliente>).get(poscli).nombre.toString()
@@ -127,7 +127,7 @@ class FragmentoIncidencia : Fragment() {
 
 
                 //enviamos los valores a la clase
-                objincidencia.fecha=fech
+                //objincidencia.fecha=fech
                 objincidencia.descripcion=desc
 
                 objcliente.idcliente=codcli
@@ -148,7 +148,7 @@ class FragmentoIncidencia : Fragment() {
             fila=i
             //asignamos los valores a los controles
             lblCodInc.text = ""+ (registroIncidencia as ArrayList<Incidencia>).get(fila).idincidencia
-            txtFechaInc.setText (""+(registroIncidencia as ArrayList<Incidencia>) .get(fila).fecha)
+            //txtFechaInc.setText (""+(registroIncidencia as ArrayList<Incidencia>) .get(fila).fecha)
             txtDescInc.setText (""+(registroIncidencia as ArrayList<Incidencia>) .get(fila).descripcion)
             for(x in (registroCliente as ArrayList<Cliente>).indices){
                 if((registroCliente as ArrayList<Cliente>).get(x).nombre== (registroIncidencia as ArrayList<Incidencia>).get(fila).cliente?.nombre){
@@ -168,7 +168,7 @@ class FragmentoIncidencia : Fragment() {
             if(fila>=0){
                 //capturando valores
                 cod=lblCodInc.text.toString().toLong()
-                fech=txtFechaInc.text.toString()
+                //fech=txtFechaInc.text.toString()
                 desc= txtDescInc.text.toString()
                 poscli=spCliInc.selectedItemPosition
                 cli= (registroCliente as ArrayList<Cliente>).get(poscli).nombre.toString()
@@ -179,7 +179,7 @@ class FragmentoIncidencia : Fragment() {
 
                 //enviamos los valores a la clase
                 objincidencia.idincidencia=cod
-                objincidencia.fecha=fech
+                //objincidencia.fecha=fech
                 objincidencia.descripcion=desc
 
                 objcliente.idcliente=codcli

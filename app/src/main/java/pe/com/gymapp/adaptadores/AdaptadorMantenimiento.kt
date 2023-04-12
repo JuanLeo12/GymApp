@@ -8,6 +8,7 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import pe.com.gymapp.R
 import pe.com.gymapp.clases.Mantenimiento
+import java.text.SimpleDateFormat
 
 class AdaptadorMantenimiento (context: Context?, private val listamantenimiento:List<Mantenimiento>?):
     BaseAdapter() {
@@ -42,7 +43,9 @@ class AdaptadorMantenimiento (context: Context?, private val listamantenimiento:
             //agregamos valores a los contrales
             lstCodMant.text = "" + objmant.idmantenimiento
             lstMaqMant.text = "" + objmant.maquina!!.nombre
-            lstFechMant.text = "" + objmant.fecha
+            val fecha = SimpleDateFormat(
+                "yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(objmant.fecha)
+            lstFechMant.text =  SimpleDateFormat("dd/MM/yyyy").format(fecha)
             if(objmant.estado==true){
                 lstEstMant.text="Habilitado"
             }else{

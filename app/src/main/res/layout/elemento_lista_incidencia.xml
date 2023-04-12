@@ -11,36 +11,51 @@
         <TextView
             android:id="@+id/lstCodInc"
             android:layout_width="20dp"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="lstCodInc" />
+            android:text="lstCodInc"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/lstCliInc"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="lstCliInc" />
+            android:text="lstCliInc"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/lstEmpInc"
-            android:layout_width="49dp"
-            android:layout_height="50dp"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="lstEmpInc" />
+            android:text="lstEmpInc"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/lstDescInc"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_width="50dp"
+            android:layout_height="55dp"
             android:layout_weight="1"
-            android:text="lstDescInc" />
+            android:text="lstDescInc"
+            android:textAlignment="textStart"
+            android:textSize="10sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/lstFechaInc"
-            android:layout_width="124dp"
-            android:layout_height="50dp"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="lstFechaInc" />
+            android:text="lstFechaInc"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="bold" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
