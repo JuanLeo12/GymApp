@@ -60,5 +60,45 @@ class SeguimientoFisico {
     var estado:Boolean=false
 
     constructor(){}
+    constructor(
+        idsegfis: Long,
+        cliente: Cliente?,
+        peso: String?,
+        cuello: String?,
+        hombros: String?,
+        pecho: String?,
+        cintura: String?,
+        bicepizq: String?,
+        bicepder: String?,
+        antebrazoizq: String?,
+        antebrazoder: String?,
+        gluteos: String?,
+        musloizq: String?,
+        musloder: String?,
+        pantorrillaizq: String?,
+        pantorrillader: String?,
+        fecha: String?,
+        estado: Boolean
+    ) {
+        this.idsegfis = idsegfis
+        this.cliente = cliente
+        this.peso = peso
+        this.cuello = cuello
+        this.hombros = hombros
+        this.pecho = pecho
+        this.cintura = cintura
+        this.bicepizq = bicepizq
+        this.bicepder = bicepder
+        this.antebrazoizq = antebrazoizq
+        this.antebrazoder = antebrazoder
+        this.gluteos = gluteos
+        this.musloizq = musloizq
+        this.musloder = musloder
+        this.pantorrillaizq = pantorrillaizq
+        this.pantorrillader = pantorrillader
+        this.fecha = fecha
+        this.estado = estado
+    }
+
 
 }

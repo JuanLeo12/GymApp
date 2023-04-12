@@ -18,10 +18,6 @@ import pe.com.gymapp.utilidad.Util
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.*
 import kotlin.collections.ArrayList
 
 

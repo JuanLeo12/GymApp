@@ -11,17 +11,11 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.FragmentTransaction
 import pe.com.gymapp.adaptadores.AdaptadorComboCliente
-import pe.com.gymapp.adaptadores.AdaptadorComboMaquina
-import pe.com.gymapp.adaptadores.AdaptadorMantenimiento
 import pe.com.gymapp.adaptadores.AdaptadorSeguimientoFisico
 import pe.com.gymapp.clases.Cliente
-import pe.com.gymapp.clases.Mantenimiento
-import pe.com.gymapp.clases.Maquina
 import pe.com.gymapp.clases.SeguimientoFisico
 import pe.com.gymapp.remoto.ApiUtil
 import pe.com.gymapp.servicios.ClienteService
-import pe.com.gymapp.servicios.MantenimientoService
-import pe.com.gymapp.servicios.MaquinaService
 import pe.com.gymapp.servicios.SeguimientoFisicoService
 import pe.com.gymapp.utilidad.Util
 import retrofit2.Call
@@ -45,7 +39,7 @@ class FragmentoSeguimientoFisico : Fragment() {
     private lateinit var txtMDSegFis: EditText
     private lateinit var txtPISegFis: EditText
     private lateinit var txtPDSegFis: EditText
-    private lateinit var txtFechSegFis: EditText
+    //private lateinit var txtFechSegFis: EditText
     private lateinit var chkEstSegFis: CheckBox
     private lateinit var lblCodSegFis: TextView
     private lateinit var btnRegistrar: Button
@@ -126,7 +120,7 @@ class FragmentoSeguimientoFisico : Fragment() {
         txtMDSegFis=raiz.findViewById(R.id.txtMDSegFis)
         txtPISegFis=raiz.findViewById(R.id.txtPISegFis)
         txtPDSegFis=raiz.findViewById(R.id.txtPDSegFis)
-        txtFechSegFis=raiz.findViewById(R.id.txtFechSegFis)
+        //txtFechSegFis=raiz.findViewById(R.id.txtFechSegFis)
         chkEstSegFis=raiz.findViewById(R.id.chkEstSegFis)
         lblCodSegFis=raiz.findViewById(R.id.lblCodSegFis)
         btnRegistrar=raiz.findViewById(R.id.btnRegistrar)
@@ -161,8 +155,7 @@ class FragmentoSeguimientoFisico : Fragment() {
                 txtMISegFis.text.toString()==""  ||
                 txtMDSegFis.text.toString()==""  ||
                 txtPISegFis.text.toString()==""  ||
-                txtPDSegFis.text.toString()==""  ||
-                txtFechSegFis.text.toString()==""){
+                txtPDSegFis.text.toString()=="" ){
                 objutilidad.MensajeToast(raiz.context,"Faltan Datos")
                 spCliSegFis.requestFocus()
             }else{
@@ -181,7 +174,7 @@ class FragmentoSeguimientoFisico : Fragment() {
                 musloD=txtMDSegFis.text.toString()
                 pantI=txtPISegFis.text.toString()
                 pantD=txtPDSegFis.text.toString()
-                fech=txtFechSegFis.text.toString()
+                //fech=txtFechSegFis.text.toString()
                 pos=spCliSegFis.selectedItemPosition
                 cli= (registroCliente as ArrayList<Cliente>).get(pos).nombre.toString()
                 codcli= (registroCliente as ArrayList<Cliente>).get(pos).idcliente
@@ -207,7 +200,7 @@ class FragmentoSeguimientoFisico : Fragment() {
                 objsegfis.musloder=musloD
                 objsegfis.pantorrillaizq=pantI
                 objsegfis.pantorrillader=pantD
-                objsegfis.fecha=fech
+                //objsegfis.fecha=fech
 
                 objCliente.idcliente=codcli
                 objsegfis.cliente=objCliente
@@ -228,7 +221,7 @@ class FragmentoSeguimientoFisico : Fragment() {
             //asignamos los valores a los controles
             lblCodSegFis.text = ""+ (registroSeguimientoFisico as ArrayList<SeguimientoFisico>).get(fila).idsegfis
             txtPesoSegFis.setText (""+(registroSeguimientoFisico as ArrayList<SeguimientoFisico>) .get(fila).peso)
-            txtFechSegFis.setText (""+(registroSeguimientoFisico as ArrayList<SeguimientoFisico>) .get(fila).fecha)
+            //txtFechSegFis.setText (""+(registroSeguimientoFisico as ArrayList<SeguimientoFisico>) .get(fila).fecha)
             for(x in (registroCliente as ArrayList<Cliente>).indices){
                 if((registroCliente as ArrayList<Cliente>).get(x).nombre== (registroSeguimientoFisico as ArrayList<SeguimientoFisico>).get(fila).cliente?.nombre){
                     indice=x
@@ -261,7 +254,7 @@ class FragmentoSeguimientoFisico : Fragment() {
                 musloD=txtMDSegFis.text.toString()
                 pantI=txtPISegFis.text.toString()
                 pantD=txtPDSegFis.text.toString()
-                fech=txtFechSegFis.text.toString()
+                //fech=txtFechSegFis.text.toString()
                 pos=spCliSegFis.selectedItemPosition
                 cli= (registroCliente as ArrayList<Cliente>).get(pos).nombre.toString()
                 codcli= (registroCliente as ArrayList<Cliente>).get(pos).idcliente
@@ -287,7 +280,7 @@ class FragmentoSeguimientoFisico : Fragment() {
                 objsegfis.musloder=musloD
                 objsegfis.pantorrillaizq=pantI
                 objsegfis.pantorrillader=pantD
-                objsegfis.fecha=fech
+                //objsegfis.fecha=fech
 
                 objCliente.idcliente=codcli
                 objsegfis.cliente=objCliente

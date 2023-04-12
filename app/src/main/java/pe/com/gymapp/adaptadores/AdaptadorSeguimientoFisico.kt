@@ -9,6 +9,7 @@ import android.widget.TextView
 import pe.com.gymapp.R
 import pe.com.gymapp.clases.Mantenimiento
 import pe.com.gymapp.clases.SeguimientoFisico
+import java.text.SimpleDateFormat
 
 class AdaptadorSeguimientoFisico (context: Context?, private val listasegfis:List<SeguimientoFisico>?):
     BaseAdapter() {
@@ -44,7 +45,9 @@ class AdaptadorSeguimientoFisico (context: Context?, private val listasegfis:Lis
             //agregamos valores a los contrales
             lstCodSegFis.text = "" + objsegfis.idsegfis
             lstCliSegFis.text = "" + objsegfis.cliente!!.nombre
-            lstFechSegFis.text = "" + objsegfis.fecha
+            val fecha = SimpleDateFormat(
+                "yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(objsegfis.fecha)
+            lstFechSegFis.text = SimpleDateFormat("dd/MM/yyyy").format(fecha)
             lstPesoSegFis.text = "" + objsegfis.peso + "kg"
             if(objsegfis.estado==true){
                 lstEstSegFis.text="Habilitado"
