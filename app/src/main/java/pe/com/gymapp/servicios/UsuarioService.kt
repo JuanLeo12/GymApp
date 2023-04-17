@@ -19,4 +19,7 @@ interface UsuarioService {
 
     @DELETE("usuario/{id}")
     fun EliminarUsuario(@Path("id") id:Long): Call<Usuario?>?
+
+    @POST("usuario/login")
+    fun ValidarUsuario(@Body u: Usuario?): Call<Boolean?>?
 }
