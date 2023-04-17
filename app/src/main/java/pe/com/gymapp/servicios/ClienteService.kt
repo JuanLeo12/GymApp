@@ -11,6 +11,18 @@ interface ClienteService {
     @GET("cliente/custom")
     fun MostrarClientePersonalizado(): Call<List<Cliente>?>?
 
+    @GET("cliente/telf")
+    fun BuscarXTelefonoCliente(@Body cl: Cliente?): Call<Cliente?>?
+
+    @GET("cliente/nombre")
+    fun BuscarXNombrePaternoCliente(@Body cl: Cliente?): Call<Cliente?>?
+
+    @GET("cliente/apellidop")
+    fun BuscarXApellidoPCliente(@Body cl: Cliente?): Call<Cliente?>?
+
+    @GET("cliente/apellidom")
+    fun BuscarXApellidoMCliente(@Body cl: Cliente?): Call<Cliente?>?
+
     @POST("cliente")
     fun RegistrarCliente(@Body c: Cliente?): Call<Cliente?>?
 

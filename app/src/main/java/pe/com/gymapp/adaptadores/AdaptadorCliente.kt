@@ -46,22 +46,22 @@ class AdaptadorCliente (context: Context?, private val listacliente:List<Cliente
             val lstMemCli= vista!!.findViewById<TextView>(R.id.lstMemCli)
             val lstEstCli= vista!!.findViewById<TextView>(R.id.lstEstCli)
             //agregamos los valores a la lista
-            lstCodCli.text=""+objcliente.idcliente
-            lstNomCli.text=""+objcliente.nombre
-            lstApPatCli.text=""+objcliente.apepaterno
-            lstApMatCli.text=""+objcliente.apematerno
-            lstTelfCli.text=""+objcliente.telefono
-            lstCorrCli.text=""+objcliente.correo
-            lstDirCli.text=""+objcliente.direccion
-            lstGenCli.text=""+objcliente.genero
-            lstMemCli.text=""+objcliente.membresia
+            lstCodCli.text="Código: "+objcliente.idcliente
+            lstNomCli.text="Nombre: "+objcliente.nombre
+            lstApPatCli.text="Apellido Paterno: "+objcliente.apepaterno
+            lstApMatCli.text="Apellido Materno: "+objcliente.apematerno
+            lstTelfCli.text="Teléfono: "+objcliente.telefono
+            lstCorrCli.text="Correo: "+objcliente.correo
+            lstDirCli.text="Dirección: "+objcliente.direccion
+            lstGenCli.text="Género: "+objcliente.genero
+            lstMemCli.text="Membresía: "+objcliente.membresia
             if(objcliente.estado==true){
                 lstEstCli.text="Habilitado"
             }else{
                 lstEstCli.text="Deshabilitado"
             }
-            lstGenCli.text=""+objcliente.genero!!.genero
-            lstMemCli.text=""+ objcliente.membresia!!.tiempo
+            lstGenCli.text="Género: "+objcliente.genero!!.genero
+            lstMemCli.text="Membresía: "+ objcliente.membresia!!.tiempo
         }
         return vista!!
     }

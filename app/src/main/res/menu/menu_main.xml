@@ -7,7 +7,13 @@
         android:title="Menu Principal" />
     <item
         android:id="@+id/jmiEmpleado"
-        android:title="Empleado" />
+        android:title="Empleado" >
+        <menu >
+            <item
+                android:id="@+id/jmiRol"
+                android:title="Rol" />
+        </menu>
+    </item>
     <item
         android:id="@+id/jmiCliente"
         android:title="Cliente" >
@@ -21,14 +27,11 @@
             <item
                 android:id="@+id/jmiIncidencia"
                 android:title="Incidencia" />
+            <item
+                android:id="@+id/jmiMembresia"
+                android:title="Membresia" />
         </menu>
     </item>
-    <item
-        android:id="@+id/jmiRol"
-        android:title="Rol" />
-    <item
-        android:id="@+id/jmiMembresia"
-        android:title="Membresia" />
     <item
         android:id="@+id/jmiProducto"
         android:title="Producto" />
@@ -77,6 +80,15 @@
     <item
         android:id="@+id/jmiUsuario"
         android:title="Usuario" />
+    <item
+        android:id="@+id/jmiBusquedas"
+        android:title="Busquedas" >
+        <menu >
+            <item
+                android:id="@+id/jmiBuscarCliente"
+                android:title="Cliente" />
+        </menu>
+    </item>
     <item
         android:id="@+id/jmiCerrarSesion"
         android:title="Cerrar Sesion" />

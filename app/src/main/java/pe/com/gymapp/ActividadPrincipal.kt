@@ -130,6 +130,13 @@ class ActividadPrincipal : AppCompatActivity() {
                 supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
                 true
             }
+
+            R.id.jmiBuscarCliente ->{
+                val fbuscarcliente=FragmentoBuscarCliente()
+                supportFragmentManager.beginTransaction().replace(R.id.contenedor,fbuscarcliente).commit()
+                true
+            }
+
             R.id.jmiUsuario ->{
                 val frag=FragmentoUsuario()
                 supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
