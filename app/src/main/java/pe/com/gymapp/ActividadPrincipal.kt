@@ -55,7 +55,7 @@ class ActividadPrincipal : AppCompatActivity() {
                 supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
                 true
             }
-            R.id.jmiEmpleado ->{
+            R.id.jmiRegistroEmpleado ->{
                 val frag=FragmentoEmpleado()
                 supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()
                 true

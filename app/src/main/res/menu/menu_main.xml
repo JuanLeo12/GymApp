@@ -10,6 +10,9 @@
         android:title="Empleado" >
         <menu >
             <item
+                android:id="@+id/jmiRegistroEmpleado"
+                android:title="Registro" />
+            <item
                 android:id="@+id/jmiRol"
                 android:title="Rol" />
         </menu>

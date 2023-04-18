@@ -46,22 +46,22 @@ class AdaptadorEmpleado (context: Context?, private val listaempleado:List<Emple
             val lstRolEmp= vista!!.findViewById<TextView>(R.id.lstRolEmp)
             val lstEstEmp= vista!!.findViewById<TextView>(R.id.lstEstEmp)
             //agregamos los valores a la lista
-            lstCodEmp.text=""+objempleado.idempleado
-            lstNomEmp.text=""+objempleado.nombre
-            lstApPatEmp.text=""+objempleado.apepaterno
-            lstApMatEmp.text=""+objempleado.apematerno
-            lstTelfEmp.text=""+objempleado.telefono
-            lstCorrEmp.text=""+objempleado.correo
-            lstGenEmp.text=""+objempleado.genero
-            lstDirEmp.text=""+objempleado.direccion
-            lstRolEmp.text=""+objempleado.rol
+            lstCodEmp.text="Código: "+objempleado.idempleado
+            lstNomEmp.text="Nombre: "+objempleado.nombre
+            lstApPatEmp.text="Apellido Paterno: "+objempleado.apepaterno
+            lstApMatEmp.text="Apellido Materno: "+objempleado.apematerno
+            lstTelfEmp.text="Teléfono: "+objempleado.telefono
+            lstCorrEmp.text="Correo: "+objempleado.correo
+            lstGenEmp.text="Género: "+objempleado.genero
+            lstDirEmp.text="Dirección: "+objempleado.direccion
+            lstRolEmp.text="Rol: "+objempleado.rol
             if(objempleado.estado==true){
-                lstEstEmp.text="Habilitado"
+                lstEstEmp.text="Estado: "+"Habilitado"
             }else{
-                lstEstEmp.text="Deshabilitado"
+                lstEstEmp.text="Estado: "+"Deshabilitado"
             }
-            lstGenEmp.text=""+objempleado.genero!!.genero
-            lstRolEmp.text=""+ objempleado.rol!!.rol
+            lstGenEmp.text="Género: "+objempleado.genero!!.genero
+            lstRolEmp.text="Rol: "+ objempleado.rol!!.rol
         }
         return vista!!
     }

@@ -56,9 +56,9 @@ class AdaptadorCliente (context: Context?, private val listacliente:List<Cliente
             lstGenCli.text="Género: "+objcliente.genero
             lstMemCli.text="Membresía: "+objcliente.membresia
             if(objcliente.estado==true){
-                lstEstCli.text="Habilitado"
+                lstEstCli.text="Estado: "+"Habilitado"
             }else{
-                lstEstCli.text="Deshabilitado"
+                lstEstCli.text="Estado: "+"Deshabilitado"
             }
             lstGenCli.text="Género: "+objcliente.genero!!.genero
             lstMemCli.text="Membresía: "+ objcliente.membresia!!.tiempo
