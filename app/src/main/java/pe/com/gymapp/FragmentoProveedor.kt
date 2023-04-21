@@ -185,7 +185,7 @@ class FragmentoProveedor : Fragment() {
     }
 
     fun MostrarProveedor(context: Context?){
-        val call= proveedorService!!.MostrarProveedor()
+        val call= proveedorService!!.MostrarProveedorPersonalizado()
         call!!.enqueue(object : Callback<List<Proveedor>?> {
             override fun onResponse(
                 call: Call<List<Proveedor>?>,

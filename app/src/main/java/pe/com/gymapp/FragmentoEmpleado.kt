@@ -349,7 +349,7 @@ class FragmentoEmpleado : Fragment() {
 
     //creamos una funcion para mostrar los producto
     fun MostrarEmpleado(context: Context?){
-        val call= empleadoService!!.MostrarEmpleado()
+        val call= empleadoService!!.MostrarEmpleadoPersonalizado()
         call!!.enqueue(object : Callback<List<Empleado>?> {
             override fun onResponse(
                 call: Call<List<Empleado>?>,

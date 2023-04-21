@@ -165,7 +165,7 @@ class FragmentoMembresia : Fragment() {
     }
 
     fun MostrarMembresia(context: Context?){
-        val call= membresiaService!!.MostrarMembresia()
+        val call= membresiaService!!.MostrarMembresiaPersonalizado()
         call!!.enqueue(object : Callback<List<Membresia>?> {
             override fun onResponse(
                 call: Call<List<Membresia>?>,

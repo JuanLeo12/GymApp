@@ -165,7 +165,7 @@ class FragmentoRol : Fragment() {
     }
 
     fun MostrarRol(context: Context?){
-        val call= rolService!!.MostrarRol()
+        val call= rolService!!.MostrarRolPersonalizado()
         call!!.enqueue(object : Callback<List<Rol>?> {
             override fun onResponse(
                 call: Call<List<Rol>?>,

@@ -180,7 +180,7 @@ class FragmentoProducto : Fragment() {
     }
 
     fun MostrarProducto(context: Context?){
-        val call= productoService!!.MostrarProducto()
+        val call= productoService!!.MostrarProductoPersonalizado()
         call!!.enqueue(object : Callback<List<Producto>?> {
             override fun onResponse(
                 call: Call<List<Producto>?>,

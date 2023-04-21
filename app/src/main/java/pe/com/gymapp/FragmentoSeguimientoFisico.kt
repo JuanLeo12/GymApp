@@ -341,7 +341,7 @@ class FragmentoSeguimientoFisico : Fragment() {
     }
 
     fun MostrarSeguimientoFisico(context: Context?){
-        val call= seguimientoFisicoService!!.MostrarSeguimientoFisico()
+        val call= seguimientoFisicoService!!.MostrarSeguimientoFisicoPersonalizado()
         call!!.enqueue(object : Callback<List<SeguimientoFisico>?> {
             override fun onResponse(
                 call: Call<List<SeguimientoFisico>?>,

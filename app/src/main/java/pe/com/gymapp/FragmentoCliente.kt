@@ -339,7 +339,7 @@ class FragmentoCliente : Fragment() {
 
     //creamos una funcion para mostrar los producto
     fun MostrarCliente(context: Context?){
-        val call= clienteService!!.MostrarCliente()
+        val call= clienteService!!.MostrarClientePersonalizado()
         call!!.enqueue(object : Callback<List<Cliente>?> {
             override fun onResponse(
                 call: Call<List<Cliente>?>,

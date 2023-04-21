@@ -239,7 +239,7 @@ class FragmentoUsuario : Fragment() {
 
     //creamos una funcion para mostrar los producto
     fun MostrarUsuario(context: Context?){
-        val call= usuarioService!!.MostrarUsuario()
+        val call= usuarioService!!.MostrarUsuarioPersonalizado()
         call!!.enqueue(object : Callback<List<Usuario>?> {
             override fun onResponse(
                 call: Call<List<Usuario>?>,

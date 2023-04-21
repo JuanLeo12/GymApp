@@ -221,7 +221,7 @@ class FragmentoMantenimiento : Fragment() {
     }
 
     fun MostrarMantenimiento(context: Context?){
-        val call= mantenimientoService!!.MostrarMantenimiento()
+        val call= mantenimientoService!!.MostrarMantenimientoPersonalizado()
         call!!.enqueue(object : Callback<List<Mantenimiento>?> {
             override fun onResponse(
                 call: Call<List<Mantenimiento>?>,

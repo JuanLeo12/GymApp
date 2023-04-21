@@ -172,7 +172,7 @@ class FragmentoMaquina : Fragment() {
     }
 
     fun MostrarMaquina(context: Context?){
-        val call= maquinaService!!.MostrarMaquina()
+        val call= maquinaService!!.MostrarMaquinaPersonalizado()
         call!!.enqueue(object : Callback<List<Maquina>?> {
             override fun onResponse(
                 call: Call<List<Maquina>?>,

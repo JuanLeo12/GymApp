@@ -66,7 +66,8 @@
                 android:id="@+id/lstProv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#CB009688" />
+                android:background="#CB009688"
+                android:listSelector="@color/design_default_color_secondary" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>
