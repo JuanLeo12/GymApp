@@ -12,17 +12,28 @@ import pe.com.gymapp.clases.Producto
 class AdaptadorProducto (context: Context?, private val listaproducto:List<Producto>?):
     BaseAdapter() {
     private val layoutInflater: LayoutInflater
+    private var listaFiltrada: List<Producto>? = null
 
     init {
         layoutInflater = LayoutInflater.from(context)
+        listaFiltrada = listaproducto
+    }
+
+    fun filter(texto: String) {
+        listaFiltrada = if (texto.isEmpty()) {
+            listaproducto
+        } else {
+            listaproducto?.filter { it.nombre!!.toLowerCase().contains(texto.toLowerCase())}
+        }
+        notifyDataSetChanged()
     }
 
     override fun getCount(): Int {
-        return listaproducto!!.size
+        return listaFiltrada!!.size
     }
 
     override fun getItem(p0: Int): Any {
-        return listaproducto!![p0]
+        return listaFiltrada!![p0]
     }
 
     override fun getItemId(p0: Int): Long {
@@ -33,6 +44,7 @@ class AdaptadorProducto (context: Context?, private val listaproducto:List<Produ
         var vista = p1
         if (vista == null) {
             vista = layoutInflater.inflate(R.layout.elemento_lista_producto, p2, false)
+        }
             val objproducto = getItem(p0) as Producto
             //creamos los controles
             val lstCodCat = vista!!.findViewById<TextView>(R.id.lstCodPro)
@@ -52,7 +64,7 @@ class AdaptadorProducto (context: Context?, private val listaproducto:List<Produ
             } else {
                 lstEstCat.text = "Deshabilitado"
             }
-        }
+
         return vista!!
     }
 }

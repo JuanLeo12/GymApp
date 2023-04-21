@@ -90,6 +90,21 @@
             <item
                 android:id="@+id/jmiBuscarCliente"
                 android:title="Cliente" />
+            <item
+                android:id="@+id/jmiBuscarEmpleado"
+                android:title="Empleado" />
+            <item
+                android:id="@+id/jmiBuscarProveedor"
+                android:title="Proveedor" />
+            <item
+                android:id="@+id/jmiBuscarMaquina"
+                android:title="Máquina" />
+            <item
+                android:id="@+id/jmiBuscarProducto"
+                android:title="Producto" />
+            <item
+                android:id="@+id/jmiBuscarUsuario"
+                android:title="Usuario" />
         </menu>
     </item>
     <item

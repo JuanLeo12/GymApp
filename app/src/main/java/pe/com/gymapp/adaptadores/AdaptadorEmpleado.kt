@@ -12,17 +12,32 @@ import pe.com.gymapp.clases.Empleado
 class AdaptadorEmpleado (context: Context?, private val listaempleado:List<Empleado>?):
     BaseAdapter() {
     private val layoutInflater: LayoutInflater
+    private var listaFiltrada: List<Empleado>? = null
 
     init {
         layoutInflater= LayoutInflater.from(context)
+        listaFiltrada = listaempleado
+    }
+
+    fun filter(texto: String) {
+        listaFiltrada = if (texto.isEmpty()) {
+            listaempleado
+        } else {
+            listaempleado?.filter { it.apepaterno!!.toLowerCase().contains(texto.toLowerCase()) ||
+                    it.apematerno!!.toLowerCase().contains(texto.toLowerCase()) ||
+                    it.telefono!!.contains(texto) ||
+                    it.nombre!!.lowercase().contains(texto.lowercase())
+            }
+        }
+        notifyDataSetChanged()
     }
 
     override fun getCount(): Int {
-        return listaempleado!!.size
+        return listaFiltrada!!.size
     }
 
     override fun getItem(p0: Int): Any {
-        return listaempleado!![p0]
+        return listaFiltrada!![p0]
     }
 
     override fun getItemId(p0: Int): Long {
@@ -33,6 +48,7 @@ class AdaptadorEmpleado (context: Context?, private val listaempleado:List<Emple
         var vista=p1
         if(vista==null){
             vista=layoutInflater.inflate(R.layout.elemento_lista_empleado,p2,false)
+        }
             val objempleado=getItem(p0) as Empleado
             //creamos los controles
             val lstCodEmp= vista!!.findViewById<TextView>(R.id.lstCodEmp)
@@ -62,7 +78,7 @@ class AdaptadorEmpleado (context: Context?, private val listaempleado:List<Emple
             }
             lstGenEmp.text="Género: "+objempleado.genero!!.genero
             lstRolEmp.text="Rol: "+ objempleado.rol!!.rol
-        }
+
         return vista!!
     }
 }

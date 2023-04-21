@@ -12,17 +12,28 @@ import pe.com.gymapp.clases.Usuario
 class AdaptadorUsuario (context: Context?, private val listausuario:List<Usuario>?):
     BaseAdapter() {
     private val layoutInflater: LayoutInflater
+    private var listaFiltrada: List<Usuario>? = null
 
     init {
         layoutInflater= LayoutInflater.from(context)
+        listaFiltrada = listausuario
+    }
+
+    fun filter(texto: String) {
+        listaFiltrada = if (texto.isEmpty()) {
+            listausuario
+        } else {
+            listausuario?.filter { it.usuario!!.toLowerCase().contains(texto.toLowerCase())}
+        }
+        notifyDataSetChanged()
     }
 
     override fun getCount(): Int {
-        return listausuario!!.size
+        return listaFiltrada!!.size
     }
 
     override fun getItem(p0: Int): Any {
-        return listausuario!![p0]
+        return listaFiltrada!![p0]
     }
 
     override fun getItemId(p0: Int): Long {
@@ -31,8 +42,9 @@ class AdaptadorUsuario (context: Context?, private val listausuario:List<Usuario
 
     override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
         var vista=p1
-        if(vista==null){
-            vista=layoutInflater.inflate(R.layout.elemento_lista_usuario,p2,false)
+        if(vista==null) {
+            vista = layoutInflater.inflate(R.layout.elemento_lista_usuario, p2, false)
+        }
             val objusuario=getItem(p0) as Usuario
             //creamos los controles
             val lstCodUsu= vista!!.findViewById<TextView>(R.id.lstCodUsu)
@@ -51,7 +63,7 @@ class AdaptadorUsuario (context: Context?, private val listausuario:List<Usuario
                 lstEstUsu.text="Deshabilitado"
             }
             lstUsuEmp.text=""+ objusuario.empleado!!.nombre
-        }
+
         return vista!!
     }
 }

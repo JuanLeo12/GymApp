@@ -30,7 +30,6 @@ class ActividadIngreso : AppCompatActivity() {
     private lateinit var txtCla:EditText
     private lateinit var btnIngresar:Button
     private lateinit var btnSalir:Button
-    private lateinit var btnNoti:Button
     //creamos un objeto de la clase usuario
     val objusuario= Usuario()
 
@@ -42,9 +41,9 @@ class ActividadIngreso : AppCompatActivity() {
     private var usu=""
     private var cla=""
 
-    companion object {
-        const val MY_CHANNEL_ID = "myChannel"
-    }
+//    companion object {
+//        const val MY_CHANNEL_ID = "myChannel"
+//    }
 
 
 
@@ -55,7 +54,6 @@ class ActividadIngreso : AppCompatActivity() {
         txtUsu=findViewById(R.id.txtInputUsu)
         txtCla=findViewById(R.id.txtInputCla)
         btnIngresar=findViewById(R.id.btnIngresar)
-        btnNoti=findViewById(R.id.btnNoti)
         btnSalir=findViewById(R.id.btnSalir)
         //creamos una variable para el contexto
         val context=this
@@ -63,11 +61,9 @@ class ActividadIngreso : AppCompatActivity() {
         //implementamos el servicio
         usuarioService= ApiUtil.usuarioService
 
-        createChannel()
-        btnNoti.setOnClickListener {
-            scheduleNotification()
+//        createChannel()
+//            scheduleNotification()
 
-        }
 
         //agregamos eventos para los botones
         btnIngresar.setOnClickListener {
@@ -103,33 +99,33 @@ class ActividadIngreso : AppCompatActivity() {
 
     fun ValidarUsuario(context: Context?, u: Usuario?){
         val call= usuarioService!!.ValidarUsuario(u)
-        call!!.enqueue(object : Callback<Boolean?> {
-            override fun onResponse(call: Call<Boolean?>, response: Response<Boolean?>) {
+        call!!.enqueue(object : Callback<List<Usuario>?> {
+            override fun onResponse(call: Call<List<Usuario>?>, response: Response<List<Usuario>?>) {
                 if(response.isSuccessful){
-                    Log.e("respuesta",""+response.body())
-                    if(response.body().toString()=="true"){
-                        if (context != null) {
-                            objutilidad.MensajeToast(context,"Bienvenidos al Sistema")
-                        }
-                        //creamos una constante para llamar a la actividad que vamos abrir
-                        val formulario=Intent(context,ActividadPrincipal::class.java)
-                        //iniciamos la actividad nueva
-                        startActivity(formulario)
-                        //cerramos la actividad correspondiente
-                        finish()
-                        Log.e("mensaje","Se valido")
-                    }else{
-                        if (context != null) {
-                            objutilidad.MensajeToast(context,"Usuario o Clave no valida")
-                        }
+                    Log.e("respuesta",""+ response.body()!!.size)
+                    if(response.body()!!.size==0){
+                        objutilidad.MensajeToast(context,"Usuario o Clave incorrecta")
                         objutilidad.Limpiar(findViewById<View>(R.id.frmIngreso) as ViewGroup)
                         txtUsu.requestFocus()
+                    }else{
+                        if(response.body()!!.get(0).estado==false){
+                            objutilidad.MensajeToast(context,"Usuario Deshabilitado")
+                        }else{
+                            objutilidad.MensajeToast(context,"Bienvenidos al Sistema")
+                            //creamos una constante para llamar a la actividad que vamos abrir
+                            val formulario=Intent(context,ActividadPrincipal::class.java)
+                            //iniciamos la actividad nueva
+                            startActivity(formulario)
+                            //cerramos la actividad correspondiente
+                            finish()
+                            Log.e("mensaje","Se valido")
+                        }
+
                     }
 
                 }
             }
-
-            override fun onFailure(call: Call<Boolean?>, t: Throwable) {
+            override fun onFailure(call: Call<List<Usuario>?>, t: Throwable) {
 
                 Log.e("Error: ", t.message!!)
             }
@@ -138,34 +134,34 @@ class ActividadIngreso : AppCompatActivity() {
         })
     }
 
-    private fun scheduleNotification() {
-        val intent = Intent(applicationContext, AlarmNotificationMantenimiento::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(
-            applicationContext,
-            NOTIFICATION_ID,
-            intent,
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-        )
-
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, Calendar.getInstance().timeInMillis + 5000, pendingIntent)
-    }
-
-    private fun createChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                MY_CHANNEL_ID,
-                "MySuperChannel",
-                NotificationManager.IMPORTANCE_DEFAULT
-            ).apply {
-                description = "SUSCRIBETE"
-            }
-
-            val notificationManager: NotificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
+//    private fun scheduleNotification() {
+//        val intent = Intent(applicationContext, AlarmNotificationMantenimiento::class.java)
+//        val pendingIntent = PendingIntent.getBroadcast(
+//            applicationContext,
+//            NOTIFICATION_ID,
+//            intent,
+//            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+//        )
+//
+//        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+//        alarmManager.setExact(AlarmManager.RTC_WAKEUP, Calendar.getInstance().timeInMillis + 5000, pendingIntent)
+//    }
+//
+//    private fun createChannel() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            val channel = NotificationChannel(
+//                MY_CHANNEL_ID,
+//                "MySuperChannel",
+//                NotificationManager.IMPORTANCE_DEFAULT
+//            ).apply {
+//                description = "SUSCRIBETE"
+//            }
+//
+//            val notificationManager: NotificationManager =
+//                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+//
+//            notificationManager.createNotificationChannel(channel)
+//        }
+//    }
 
 }

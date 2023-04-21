@@ -12,17 +12,28 @@ import pe.com.gymapp.clases.Maquina
 class AdaptadorMaquina (context: Context?, private val listamaquina:List<Maquina>?):
     BaseAdapter() {
     private val layoutInflater: LayoutInflater
+    private var listaFiltrada: List<Maquina>? = null
 
     init {
         layoutInflater = LayoutInflater.from(context)
+        listaFiltrada = listamaquina
+    }
+
+    fun filter(texto: String) {
+        listaFiltrada = if (texto.isEmpty()) {
+            listamaquina
+        } else {
+            listamaquina?.filter { it.nombre!!.toLowerCase().contains(texto.toLowerCase())}
+        }
+        notifyDataSetChanged()
     }
 
     override fun getCount(): Int {
-        return listamaquina!!.size
+        return listaFiltrada!!.size
     }
 
     override fun getItem(p0: Int): Any {
-        return listamaquina!![p0]
+        return listaFiltrada!![p0]
     }
 
     override fun getItemId(p0: Int): Long {
@@ -33,6 +44,7 @@ class AdaptadorMaquina (context: Context?, private val listamaquina:List<Maquina
         var vista = p1
         if (vista == null) {
             vista = layoutInflater.inflate(R.layout.elemento_lista_maquina, p2, false)
+        }
             val objmaquina = getItem(p0) as Maquina
             //creamos los controles
             val lstCodMaq = vista!!.findViewById<TextView>(R.id.lstCodMaq)
@@ -50,7 +62,7 @@ class AdaptadorMaquina (context: Context?, private val listamaquina:List<Maquina
             } else {
                 lstEstMaq.text = "Deshabilitado"
             }
-        }
+
         return vista!!
     }
 }

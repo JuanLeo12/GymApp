@@ -137,6 +137,36 @@ class ActividadPrincipal : AppCompatActivity() {
                 true
             }
 
+            R.id.jmiBuscarEmpleado ->{
+                val fbuscaremp=FragmentoBuscarEmpleado()
+                supportFragmentManager.beginTransaction().replace(R.id.contenedor,fbuscaremp).commit()
+                true
+            }
+
+            R.id.jmiBuscarProveedor ->{
+                val fbuscarprov=FragmentoBuscarProveedor()
+                supportFragmentManager.beginTransaction().replace(R.id.contenedor,fbuscarprov).commit()
+                true
+            }
+
+            R.id.jmiBuscarMaquina ->{
+                val fbuscarmaq=FragmentoBuscarMaquina()
+                supportFragmentManager.beginTransaction().replace(R.id.contenedor,fbuscarmaq).commit()
+                true
+            }
+
+            R.id.jmiBuscarProducto ->{
+                val fbuscarprod=FragmentoBuscarProducto()
+                supportFragmentManager.beginTransaction().replace(R.id.contenedor,fbuscarprod).commit()
+                true
+            }
+
+            R.id.jmiBuscarUsuario ->{
+                val fbuscarusu=FragmentoBuscarUsuario()
+                supportFragmentManager.beginTransaction().replace(R.id.contenedor,fbuscarusu).commit()
+                true
+            }
+
             R.id.jmiUsuario ->{
                 val frag=FragmentoUsuario()
                 supportFragmentManager.beginTransaction().replace(R.id.contenedor,frag).commit()

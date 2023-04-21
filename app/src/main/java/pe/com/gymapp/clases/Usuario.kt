@@ -18,7 +18,7 @@ class Usuario {
     var empleado:Empleado?=null
     @SerializedName("estado")
     @Expose
-    var estado:Boolean=false
+    var estado=false
 
     constructor(){}
     constructor(

@@ -1,5 +1,6 @@
 package pe.com.gymapp.servicios
 
+import pe.com.gymapp.clases.Cliente
 import pe.com.gymapp.clases.Maquina
 import retrofit2.Call
 import retrofit2.http.*
@@ -16,6 +17,9 @@ interface MaquinaService {
 
     @PUT("maquina/{id}")
     fun ActualizarMaquina(@Path("id") id:Long, @Body m: Maquina?): Call<Maquina?>?
+
+    @PATCH("maquina/{id}")
+    fun EnableMaquina(@Path("id") id:Long): Call<Maquina?>?
 
     @DELETE("maquina/{id}")
     fun EliminarMaquina(@Path("id") id:Long): Call<Maquina?>?

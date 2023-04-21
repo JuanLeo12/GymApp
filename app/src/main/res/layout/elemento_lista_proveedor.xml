@@ -8,66 +8,72 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/lstCodProv"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="lstCodProv"
-            android:textAlignment="center"
-            android:textSize="10sp"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/lstNomProv"
-            android:layout_width="60dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="lstNomProv"
-            android:textAlignment="viewStart"
-            android:textSize="10sp"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/lstTelfProv"
-            android:layout_width="30dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="lstTelfProv"
-            android:textAlignment="viewStart"
-            android:textSize="10sp"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/lstCorrProv"
-            android:layout_width="80dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="lstCorrProv"
-            android:textAlignment="viewStart"
-            android:textSize="10sp"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/lstDirProv"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="lstDirProv"
-            android:textAlignment="viewStart"
-            android:textSize="10sp"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/lstEstProv"
-            android:layout_width="30dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="lstEstProv"
-            android:textAlignment="viewStart"
-            android:textSize="10sp"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="14sp"
             android:textStyle="bold" />
     </LinearLayout>
 

@@ -25,22 +25,23 @@ class AlarmNotificationCompraProducto : BroadcastReceiver() {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
 
-        val flag = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0
+        val flag =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0
         val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, flag)
 
-        val notification = NotificationCompat.Builder(context, ActividadIngreso.MY_CHANNEL_ID)
-            .setContentTitle("Compra de productos")
-            .setContentText("Recuerda revisar el stock de los productos")
-            .setStyle(
-                NotificationCompat.BigTextStyle()
-                    .bigText("Hola, recuerda revisar de manera diaria los stocks de los productos para que el almacén no se quede sin suministros")
-            )
-            .setContentIntent(pendingIntent)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .build()
+//        val notification = NotificationCompat.Builder(context, ActividadIngreso.MY_CHANNEL_ID)
+//            .setContentTitle("Compra de productos")
+//            .setContentText("Recuerda revisar el stock de los productos")
+//            .setStyle(
+//                NotificationCompat.BigTextStyle()
+//                    .bigText("Hola, recuerda revisar de manera diaria los stocks de los productos para que el almacén no se quede sin suministros")
+//            )
+//            .setContentIntent(pendingIntent)
+//            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+//            .build()
 
-        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        manager.notify(NOTIFICATION_ID, notification)
+//        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+//        manager.notify(NOTIFICATION_ID, notification)
+//    }
     }
-
 }

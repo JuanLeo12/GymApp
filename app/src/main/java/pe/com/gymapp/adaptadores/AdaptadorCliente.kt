@@ -12,17 +12,33 @@ import pe.com.gymapp.clases.Cliente
 class AdaptadorCliente (context: Context?, private val listacliente:List<Cliente>?):
     BaseAdapter() {
     private val layoutInflater: LayoutInflater
+    private var listaFiltrada: List<Cliente>? = null
 
     init {
         layoutInflater= LayoutInflater.from(context)
+        listaFiltrada = listacliente
     }
 
+    fun filter(texto: String) {
+        listaFiltrada = if (texto.isEmpty()) {
+            listacliente
+        } else {
+            listacliente?.filter { it.apepaterno!!.toLowerCase().contains(texto.toLowerCase()) ||
+                    it.apematerno!!.toLowerCase().contains(texto.toLowerCase()) ||
+                    it.telefono!!.contains(texto) ||
+                    it.nombre!!.lowercase().contains(texto.lowercase())
+            }
+        }
+        notifyDataSetChanged()
+    }
+
+
     override fun getCount(): Int {
-        return listacliente!!.size
+        return listaFiltrada!!.size
     }
 
     override fun getItem(p0: Int): Any {
-        return listacliente!![p0]
+        return listaFiltrada!![p0]
     }
 
     override fun getItemId(p0: Int): Long {
@@ -31,8 +47,9 @@ class AdaptadorCliente (context: Context?, private val listacliente:List<Cliente
 
     override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
         var vista=p1
-        if(vista==null){
-            vista=layoutInflater.inflate(R.layout.elemento_lista_cliente,p2,false)
+        if(vista==null) {
+            vista = layoutInflater.inflate(R.layout.elemento_lista_cliente, p2, false)
+        }
             val objcliente=getItem(p0) as Cliente
             //creamos los controles
             val lstCodCli= vista!!.findViewById<TextView>(R.id.lstCodCli)
@@ -62,7 +79,7 @@ class AdaptadorCliente (context: Context?, private val listacliente:List<Cliente
             }
             lstGenCli.text="Género: "+objcliente.genero!!.genero
             lstMemCli.text="Membresía: "+ objcliente.membresia!!.tiempo
-        }
+
         return vista!!
     }
 }

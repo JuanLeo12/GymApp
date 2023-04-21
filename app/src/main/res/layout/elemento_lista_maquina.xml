@@ -14,6 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="lstCodMaq"
+            android:textColor="@color/black"
             android:textStyle="bold" />
 
         <TextView
@@ -22,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="lstNomMaq"
+            android:textColor="@color/black"
             android:textStyle="bold" />
 
         <TextView
@@ -30,6 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="lstPreComMaq"
+            android:textColor="@color/black"
             android:textStyle="bold" />
 
         <TextView
@@ -38,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="lstCantMaq"
+            android:textColor="@color/black"
             android:textStyle="bold" />
 
         <TextView
@@ -46,6 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="lstEstMaq"
+            android:textColor="@color/black"
             android:textStyle="bold" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

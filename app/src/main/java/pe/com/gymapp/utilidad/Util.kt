@@ -39,7 +39,7 @@ class Util {
     }
 
     //creamos un procedimiento para mostrar los mensajes en Toast
-    fun MensajeToast(context: Context, men:String){
+    fun MensajeToast(context: Context?, men:String){
         Toast.makeText(context,men, Toast.LENGTH_LONG).show()
     }
 

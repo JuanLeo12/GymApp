@@ -1,5 +1,6 @@
 package pe.com.gymapp.servicios
 
+import pe.com.gymapp.clases.Cliente
 import pe.com.gymapp.clases.Empleado
 import retrofit2.Call
 import retrofit2.http.*
@@ -16,6 +17,9 @@ interface EmpleadoService {
 
     @PUT("empleado/{id}")
     fun ActualizarEmpleado(@Path("id") id:Long, @Body r: Empleado?): Call<Empleado?>?
+
+    @PATCH("empleado/{id}")
+    fun EnableEmpleado(@Path("id") id:Long): Call<Empleado?>?
 
     @DELETE("empleado/{id}")
     fun EliminarEmpleado(@Path("id") id:Long): Call<Empleado?>?

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frmBuscarCliente"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/fondoalternativo"
-    tools:context=".FragmentoBuscarCliente">
+    android:background="@mipmap/fonodalternativo2"
+    tools:context=".FragmentoBuscarProducto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +17,7 @@
             android:orientation="horizontal">
 
             <SearchView
-                android:id="@+id/txtBusCli"
+                android:id="@+id/txtBusProd"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#9A009688" />
@@ -30,12 +29,13 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/lblCodCli"
-                android:layout_width="match_parent"
+                android:id="@+id/lblCodProd"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="#CB009688"
-                android:text="lblCodCli" />
+                android:text="lblCodProd"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -44,14 +44,14 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnHabilitarCli"
+                android:id="@+id/btnHabilitarProd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Habilitar" />
 
             <Button
-                android:id="@+id/btnDeshabilitarCli"
+                android:id="@+id/btnDeshabilitarProd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -64,12 +64,11 @@
             android:orientation="horizontal">
 
             <ListView
-                android:id="@+id/lstCli"
+                android:id="@+id/lstProd"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="#CB009688"
                 android:listSelector="@color/design_default_color_secondary" />
         </LinearLayout>
-
     </LinearLayout>
 </FrameLayout>

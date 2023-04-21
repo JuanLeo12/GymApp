@@ -12,17 +12,31 @@ import pe.com.gymapp.clases.Proveedor
 class AdaptadorProveedor (context: Context?, private val listaproveedor:List<Proveedor>?):
     BaseAdapter() {
     private val layoutInflater: LayoutInflater
+    private var listaFiltrada: List<Proveedor>? = null
 
     init {
         layoutInflater = LayoutInflater.from(context)
+        listaFiltrada = listaproveedor
+    }
+
+    fun filter(texto: String) {
+        listaFiltrada = if (texto.isEmpty()) {
+            listaproveedor
+        } else {
+            listaproveedor?.filter { it.direccion!!.toLowerCase().contains(texto.toLowerCase()) ||
+                    it.telefono!!.contains(texto) ||
+                    it.nombre!!.lowercase().contains(texto.lowercase())
+            }
+        }
+        notifyDataSetChanged()
     }
 
     override fun getCount(): Int {
-        return listaproveedor!!.size
+        return listaFiltrada!!.size
     }
 
     override fun getItem(p0: Int): Any {
-        return listaproveedor!![p0]
+        return listaFiltrada!![p0]
     }
 
     override fun getItemId(p0: Int): Long {
@@ -33,6 +47,7 @@ class AdaptadorProveedor (context: Context?, private val listaproveedor:List<Pro
         var vista = p1
         if (vista == null) {
             vista = layoutInflater.inflate(R.layout.elemento_lista_proveedor, p2, false)
+        }
             val objproveedor = getItem(p0) as Proveedor
             //creamos los controles
             val lstCodProv = vista!!.findViewById<TextView>(R.id.lstCodProv)
@@ -42,17 +57,17 @@ class AdaptadorProveedor (context: Context?, private val listaproveedor:List<Pro
             val lstDirProv = vista!!.findViewById<TextView>(R.id.lstDirProv)
             val lstEstProv = vista!!.findViewById<TextView>(R.id.lstEstProv)
             //agregamos valores a los contrales
-            lstCodProv.text = "" + objproveedor.idproveedor
-            lstNomProv.text = "" + objproveedor.nombre
-            lstTelfProv.text = "" + objproveedor.telefono
-            lstCorrProv.text = "" + objproveedor.correo
-            lstDirProv.text = "" + objproveedor.direccion
+            lstCodProv.text = "Proveedor: " + objproveedor.idproveedor
+            lstNomProv.text = "Nombre: " + objproveedor.nombre
+            lstTelfProv.text = "Teléfono: " + objproveedor.telefono
+            lstCorrProv.text = "Correo: " + objproveedor.correo
+            lstDirProv.text = "Dirección: " + objproveedor.direccion
             if (objproveedor.estado == true) {
-                lstEstProv.text = "Habilitado"
+                lstEstProv.text = "Estado: Habilitado"
             } else {
-                lstEstProv.text = "Deshabilitado"
+                lstEstProv.text = "Estado: Deshabilitado"
             }
-        }
+
         return vista!!
     }
 }

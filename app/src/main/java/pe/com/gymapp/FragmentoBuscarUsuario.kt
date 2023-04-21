@@ -8,12 +8,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.ListView
+import android.widget.SearchView
+import android.widget.TextView
 import androidx.fragment.app.FragmentTransaction
 import pe.com.gymapp.adaptadores.AdaptadorCliente
+import pe.com.gymapp.adaptadores.AdaptadorUsuario
 import pe.com.gymapp.clases.Cliente
+import pe.com.gymapp.clases.Usuario
 import pe.com.gymapp.remoto.ApiUtil
 import pe.com.gymapp.servicios.ClienteService
+import pe.com.gymapp.servicios.UsuarioService
 import pe.com.gymapp.utilidad.Util
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,19 +32,19 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [FragmentoBuscarCliente.newInstance] factory method to
+ * Use the [FragmentoBuscarUsuario.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FragmentoBuscarCliente : Fragment() {
+class FragmentoBuscarUsuario : Fragment() {
     //declaramos los controles
-    private lateinit var txtBusCli: SearchView
-    private lateinit var lblCodCli: TextView
-    private lateinit var btnHabilitarCli: Button
-    private lateinit var btnDeshabilitarCli: Button
-    private lateinit var lstCli: ListView
+    private lateinit var txtBusUsu: SearchView
+    private lateinit var lblCodUsu: TextView
+    private lateinit var btnHabilitarUsu: Button
+    private lateinit var btnDeshabilitarUsu: Button
+    private lateinit var lstUsu: ListView
 
     //cremamos un objeto de la clase categoria
-    private val objcliente= Cliente()
+    private val objusuario= Usuario()
 
     //creamos variables
     private var cod=0L
@@ -48,10 +54,10 @@ class FragmentoBuscarCliente : Fragment() {
     private var cri=""
 
     //llamamos al servicio
-    private var clienteService: ClienteService?=null
+    private var usuarioService: UsuarioService?=null
 
     //creamos una lista de tipo categoria
-    private var registrocliente:List<Cliente>?=null
+    private var registrousuario:List<Usuario>?=null
 
     //creamos un objeto de la clase Util
     private val objutilidad= Util()
@@ -78,83 +84,83 @@ class FragmentoBuscarCliente : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val raiz=inflater.inflate(R.layout.fragmento_buscar_cliente,container,false)
+        val raiz=inflater.inflate(R.layout.fragmento_buscar_usuario,container,false)
         //creamos los controles
-        txtBusCli=raiz.findViewById(R.id.txtBusCli)
-        lblCodCli=raiz.findViewById(R.id.lblCodCli)
-        btnHabilitarCli=raiz.findViewById(R.id.btnHabilitarCli)
-        btnDeshabilitarCli=raiz.findViewById(R.id.btnDeshabilitarCli)
-        lstCli=raiz.findViewById(R.id.lstCli)
+        txtBusUsu=raiz.findViewById(R.id.txtBusUsu)
+        lblCodUsu=raiz.findViewById(R.id.lblCodUsu)
+        btnHabilitarUsu=raiz.findViewById(R.id.btnHabilitarUsu)
+        btnDeshabilitarUsu=raiz.findViewById(R.id.btnDeshabilitarUsu)
+        lstUsu=raiz.findViewById(R.id.lstUsu)
 
         //creamos el registro categoria
-        registrocliente=ArrayList()
+        registrousuario=ArrayList()
         //implementamos el servicio
-        clienteService= ApiUtil.clienteService
+        usuarioService= ApiUtil.usuarioService
         //mostramos los clientes
-        MostrarCliente(raiz.context)
+        MostrarUsuario(raiz.context)
 
         //eventos
-        txtBusCli.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        txtBusUsu.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                (lstCli.adapter as AdaptadorCliente).filter(newText ?: "")
+                (lstUsu.adapter as AdaptadorUsuario).filter(newText ?: "")
                 return true
             }
         })
 
-        lstCli.setOnItemClickListener { adapterView, view, i, l ->
+        lstUsu.setOnItemClickListener { adapterView, view, i, l ->
             fila=i
 
-            lblCodCli.setText(""+(registrocliente as ArrayList<Cliente>).get(fila).idcliente)
+            lblCodUsu.setText(""+(registrousuario as ArrayList<Usuario>).get(fila).idusuario)
         }
 
-        btnHabilitarCli.setOnClickListener {
+        btnHabilitarUsu.setOnClickListener {
             if(fila>=0){
-                cod=lblCodCli.text.toString().toLong()
+                cod=lblCodUsu.text.toString().toLong()
 
-                EnableCliente(raiz.context,cod)
-                val fbcliente=FragmentoBuscarCliente()
-                DialogoCRUD("Habilitar Cliente","Se habilitó al cliente correctamente",fbcliente)
+                EnableUsuario(raiz.context,cod)
+                val fbcliente=FragmentoBuscarUsuario()
+                DialogoCRUD("Habilitar Usuario","Se habilitó al usuario correctamente",fbcliente)
             }else{
                 objutilidad.MensajeToast(raiz.context,"Seleccione un elemento de la lista")
-                lstCli.requestFocus()
+                lstUsu.requestFocus()
             }
         }
 
-        btnDeshabilitarCli.setOnClickListener {
+        btnDeshabilitarUsu.setOnClickListener {
             if(fila>=0){
-                cod=lblCodCli.text.toString().toLong()
+                cod=lblCodUsu.text.toString().toLong()
 
-                EliminarCliente(raiz.context,cod)
-                val fbcliente=FragmentoBuscarCliente()
-                DialogoCRUD("Deshabilitar Cliente","Se deshabilitó al cliente correctamente",fbcliente)
+                EliminarUsuario(raiz.context,cod)
+                val fbcliente=FragmentoBuscarUsuario()
+                DialogoCRUD("Deshabilitar Usuario","Se deshabilitó al usuario correctamente",fbcliente)
             }else{
                 objutilidad.MensajeToast(raiz.context,"Seleccione un elemento de la lista")
-                lstCli.requestFocus()
+                lstUsu.requestFocus()
             }
         }
         return raiz
     }
 
-    fun MostrarCliente(context: Context?){
-        val call= clienteService!!.MostrarCliente()
-        call!!.enqueue(object : Callback<List<Cliente>?> {
+    fun MostrarUsuario(context: Context?){
+        val call= usuarioService!!.MostrarUsuario()
+        call!!.enqueue(object : Callback<List<Usuario>?> {
             override fun onResponse(
-                call: Call<List<Cliente>?>,
-                response: Response<List<Cliente>?>
+                call: Call<List<Usuario>?>,
+                response: Response<List<Usuario>?>
             ) {
                 if(response.isSuccessful){
-                    registrocliente=response.body()
-                    lstCli.adapter= AdaptadorCliente(context,registrocliente)
+                    registrousuario=response.body()
+                    lstUsu.adapter= AdaptadorUsuario(context,registrousuario)
 
 
                 }
             }
 
-            override fun onFailure(call: Call<List<Cliente>?>, t: Throwable) {
+            override fun onFailure(call: Call<List<Usuario>?>, t: Throwable) {
                 Log.e("Error: ", t.message!!)
             }
 
@@ -162,16 +168,16 @@ class FragmentoBuscarCliente : Fragment() {
         })
     }
 
-    fun EliminarCliente(context: Context?, id:Long){
-        val call= clienteService!!.EliminarCliente(id)
-        call!!.enqueue(object : Callback<Cliente?> {
-            override fun onResponse(call: Call<Cliente?>, response: Response<Cliente?>) {
+    fun EliminarUsuario(context: Context?, id:Long){
+        val call= usuarioService!!.EliminarUsuario(id)
+        call!!.enqueue(object : Callback<Usuario?> {
+            override fun onResponse(call: Call<Usuario?>, response: Response<Usuario?>) {
                 if(response.isSuccessful){
                     Log.e("mensaje","Se eliminó")
                 }
             }
 
-            override fun onFailure(call: Call<Cliente?>, t: Throwable) {
+            override fun onFailure(call: Call<Usuario?>, t: Throwable) {
                 Log.e("Error: ", t.message!!)
             }
 
@@ -179,16 +185,16 @@ class FragmentoBuscarCliente : Fragment() {
         })
     }
 
-    fun EnableCliente(context: Context?, id:Long){
-        val call= clienteService!!.EnableCliente(id)
-        call!!.enqueue(object : Callback<Cliente?> {
-            override fun onResponse(call: Call<Cliente?>, response: Response<Cliente?>) {
+    fun EnableUsuario(context: Context?, id:Long){
+        val call= usuarioService!!.EnableUsuario(id)
+        call!!.enqueue(object : Callback<Usuario?> {
+            override fun onResponse(call: Call<Usuario?>, response: Response<Usuario?>) {
                 if(response.isSuccessful){
                     Log.e("mensaje","Se habilitó")
                 }
             }
 
-            override fun onFailure(call: Call<Cliente?>, t: Throwable) {
+            override fun onFailure(call: Call<Usuario?>, t: Throwable) {
                 Log.e("Error: ", t.message!!)
             }
 

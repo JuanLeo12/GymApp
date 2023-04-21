@@ -29,6 +29,9 @@ interface ClienteService {
     @PUT("cliente/{id}")
     fun ActualizarCliente(@Path("id") id:Long, @Body r: Cliente?): Call<Cliente?>?
 
+    @PATCH("cliente/{id}")
+    fun EnableCliente(@Path("id") id:Long): Call<Cliente?>?
+
     @DELETE("cliente/{id}")
     fun EliminarCliente(@Path("id") id:Long): Call<Cliente?>?
 }

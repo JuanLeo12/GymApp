@@ -17,6 +17,7 @@
             android:layout_weight="1"
             android:text="lstCodEmp"
             android:textAlignment="textStart"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -27,6 +28,7 @@
             android:layout_weight="1"
             android:text="lstNomEmp"
             android:textAlignment="textStart"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -37,6 +39,7 @@
             android:layout_weight="1"
             android:text="lstApPatEmp"
             android:textAlignment="textStart"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -47,6 +50,7 @@
             android:layout_weight="1"
             android:text="lstApMatEmp"
             android:textAlignment="textStart"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -57,6 +61,7 @@
             android:layout_weight="1"
             android:text="lstTelfEmp"
             android:textAlignment="textStart"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -67,6 +72,7 @@
             android:layout_weight="1"
             android:text="lstCorrEmp"
             android:textAlignment="textStart"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -77,6 +83,7 @@
             android:layout_weight="1"
             android:text="lstGenEmp"
             android:textAlignment="textStart"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -87,6 +94,7 @@
             android:layout_weight="1"
             android:text="lstDirEmp"
             android:textAlignment="textStart"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -97,6 +105,7 @@
             android:layout_weight="1"
             android:text="lstRolEmp"
             android:textAlignment="textStart"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -107,6 +116,7 @@
             android:layout_weight="1"
             android:text="lstEstEmp"
             android:textAlignment="textStart"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold" />
     </LinearLayout>

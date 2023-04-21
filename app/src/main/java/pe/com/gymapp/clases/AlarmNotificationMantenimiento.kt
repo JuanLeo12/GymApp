@@ -28,19 +28,19 @@ class AlarmNotificationMantenimiento : BroadcastReceiver() {
         val flag = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0
         val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, flag)
 
-        val notification = NotificationCompat.Builder(context, ActividadIngreso.MY_CHANNEL_ID)
-           .setContentTitle("Mantenimiento de Máquinas")
-            .setContentText("Recuerda revisar las fechas de mantenimiento")
-            .setStyle(
-                NotificationCompat.BigTextStyle()
-                    .bigText("Hola, recuerda revisar de manera diaria las fechas de mantenimiento de máquinas para que no se te pase ninguna fecha")
-            )
-            .setContentIntent(pendingIntent)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .build()
-
-        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        manager.notify(NOTIFICATION_ID, notification)
+//        val notification = NotificationCompat.Builder(context, ActividadIngreso.MY_CHANNEL_ID)
+//           .setContentTitle("Mantenimiento de Máquinas")
+//            .setContentText("Recuerda revisar las fechas de mantenimiento")
+//            .setStyle(
+//                NotificationCompat.BigTextStyle()
+//                    .bigText("Hola, recuerda revisar de manera diaria las fechas de mantenimiento de máquinas para que no se te pase ninguna fecha")
+//            )
+//            .setContentIntent(pendingIntent)
+//            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+//            .build()
+//
+//        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+//        manager.notify(NOTIFICATION_ID, notification)
     }
 
 }

@@ -8,12 +8,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.ListView
+import android.widget.SearchView
+import android.widget.TextView
 import androidx.fragment.app.FragmentTransaction
 import pe.com.gymapp.adaptadores.AdaptadorCliente
+import pe.com.gymapp.adaptadores.AdaptadorEmpleado
 import pe.com.gymapp.clases.Cliente
+import pe.com.gymapp.clases.Empleado
 import pe.com.gymapp.remoto.ApiUtil
 import pe.com.gymapp.servicios.ClienteService
+import pe.com.gymapp.servicios.EmpleadoService
 import pe.com.gymapp.utilidad.Util
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,19 +32,18 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [FragmentoBuscarCliente.newInstance] factory method to
+ * Use the [FragmentoBuscarEmpleado.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FragmentoBuscarCliente : Fragment() {
-    //declaramos los controles
-    private lateinit var txtBusCli: SearchView
-    private lateinit var lblCodCli: TextView
-    private lateinit var btnHabilitarCli: Button
-    private lateinit var btnDeshabilitarCli: Button
-    private lateinit var lstCli: ListView
+class FragmentoBuscarEmpleado : Fragment() {
+    private lateinit var txtBusEmp: SearchView
+    private lateinit var lblCodEmp: TextView
+    private lateinit var btnHabilitarEmp: Button
+    private lateinit var btnDeshabilitarEmp: Button
+    private lateinit var lstEmp: ListView
 
     //cremamos un objeto de la clase categoria
-    private val objcliente= Cliente()
+    private val objempleado= Empleado()
 
     //creamos variables
     private var cod=0L
@@ -48,10 +53,10 @@ class FragmentoBuscarCliente : Fragment() {
     private var cri=""
 
     //llamamos al servicio
-    private var clienteService: ClienteService?=null
+    private var empleadoService: EmpleadoService?=null
 
     //creamos una lista de tipo categoria
-    private var registrocliente:List<Cliente>?=null
+    private var registroempleado:List<Empleado>?=null
 
     //creamos un objeto de la clase Util
     private val objutilidad= Util()
@@ -78,83 +83,83 @@ class FragmentoBuscarCliente : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val raiz=inflater.inflate(R.layout.fragmento_buscar_cliente,container,false)
+        val raiz=inflater.inflate(R.layout.fragmento_buscar_empleado,container,false)
         //creamos los controles
-        txtBusCli=raiz.findViewById(R.id.txtBusCli)
-        lblCodCli=raiz.findViewById(R.id.lblCodCli)
-        btnHabilitarCli=raiz.findViewById(R.id.btnHabilitarCli)
-        btnDeshabilitarCli=raiz.findViewById(R.id.btnDeshabilitarCli)
-        lstCli=raiz.findViewById(R.id.lstCli)
+        txtBusEmp=raiz.findViewById(R.id.txtBusEmp)
+        lblCodEmp=raiz.findViewById(R.id.lblCodEmp)
+        btnHabilitarEmp=raiz.findViewById(R.id.btnHabilitarEmp)
+        btnDeshabilitarEmp=raiz.findViewById(R.id.btnDeshabilitarEmp)
+        lstEmp=raiz.findViewById(R.id.lstEmp)
 
         //creamos el registro categoria
-        registrocliente=ArrayList()
+        registroempleado=ArrayList()
         //implementamos el servicio
-        clienteService= ApiUtil.clienteService
+        empleadoService= ApiUtil.empleadoService
         //mostramos los clientes
-        MostrarCliente(raiz.context)
+        MostrarEmpleado(raiz.context)
 
         //eventos
-        txtBusCli.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        txtBusEmp.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                (lstCli.adapter as AdaptadorCliente).filter(newText ?: "")
+                (lstEmp.adapter as AdaptadorEmpleado).filter(newText ?: "")
                 return true
             }
         })
 
-        lstCli.setOnItemClickListener { adapterView, view, i, l ->
+        lstEmp.setOnItemClickListener { adapterView, view, i, l ->
             fila=i
 
-            lblCodCli.setText(""+(registrocliente as ArrayList<Cliente>).get(fila).idcliente)
+            lblCodEmp.setText(""+(registroempleado as ArrayList<Empleado>).get(fila).idempleado)
         }
 
-        btnHabilitarCli.setOnClickListener {
+        btnHabilitarEmp.setOnClickListener {
             if(fila>=0){
-                cod=lblCodCli.text.toString().toLong()
+                cod=lblCodEmp.text.toString().toLong()
 
-                EnableCliente(raiz.context,cod)
-                val fbcliente=FragmentoBuscarCliente()
-                DialogoCRUD("Habilitar Cliente","Se habilitó al cliente correctamente",fbcliente)
+                EnableEmpleado(raiz.context,cod)
+                val fbcliente=FragmentoBuscarEmpleado()
+                DialogoCRUD("Habilitar Empleado","Se habilitó al empleado correctamente",fbcliente)
             }else{
                 objutilidad.MensajeToast(raiz.context,"Seleccione un elemento de la lista")
-                lstCli.requestFocus()
+                lstEmp.requestFocus()
             }
         }
 
-        btnDeshabilitarCli.setOnClickListener {
+        btnDeshabilitarEmp.setOnClickListener {
             if(fila>=0){
-                cod=lblCodCli.text.toString().toLong()
+                cod=lblCodEmp.text.toString().toLong()
 
-                EliminarCliente(raiz.context,cod)
-                val fbcliente=FragmentoBuscarCliente()
-                DialogoCRUD("Deshabilitar Cliente","Se deshabilitó al cliente correctamente",fbcliente)
+                EliminarEmpleado(raiz.context,cod)
+                val fbcliente=FragmentoBuscarEmpleado()
+                DialogoCRUD("Deshabilitar Empleado","Se deshabilitó al empleado correctamente",fbcliente)
             }else{
                 objutilidad.MensajeToast(raiz.context,"Seleccione un elemento de la lista")
-                lstCli.requestFocus()
+                lstEmp.requestFocus()
             }
         }
         return raiz
     }
 
-    fun MostrarCliente(context: Context?){
-        val call= clienteService!!.MostrarCliente()
-        call!!.enqueue(object : Callback<List<Cliente>?> {
+    fun MostrarEmpleado(context: Context?){
+        val call= empleadoService!!.MostrarEmpleado()
+        call!!.enqueue(object : Callback<List<Empleado>?> {
             override fun onResponse(
-                call: Call<List<Cliente>?>,
-                response: Response<List<Cliente>?>
+                call: Call<List<Empleado>?>,
+                response: Response<List<Empleado>?>
             ) {
                 if(response.isSuccessful){
-                    registrocliente=response.body()
-                    lstCli.adapter= AdaptadorCliente(context,registrocliente)
+                    registroempleado=response.body()
+                    lstEmp.adapter= AdaptadorEmpleado(context,registroempleado)
 
 
                 }
             }
 
-            override fun onFailure(call: Call<List<Cliente>?>, t: Throwable) {
+            override fun onFailure(call: Call<List<Empleado>?>, t: Throwable) {
                 Log.e("Error: ", t.message!!)
             }
 
@@ -162,16 +167,16 @@ class FragmentoBuscarCliente : Fragment() {
         })
     }
 
-    fun EliminarCliente(context: Context?, id:Long){
-        val call= clienteService!!.EliminarCliente(id)
-        call!!.enqueue(object : Callback<Cliente?> {
-            override fun onResponse(call: Call<Cliente?>, response: Response<Cliente?>) {
+    fun EliminarEmpleado(context: Context?, id:Long){
+        val call= empleadoService!!.EliminarEmpleado(id)
+        call!!.enqueue(object : Callback<Empleado?> {
+            override fun onResponse(call: Call<Empleado?>, response: Response<Empleado?>) {
                 if(response.isSuccessful){
                     Log.e("mensaje","Se eliminó")
                 }
             }
 
-            override fun onFailure(call: Call<Cliente?>, t: Throwable) {
+            override fun onFailure(call: Call<Empleado?>, t: Throwable) {
                 Log.e("Error: ", t.message!!)
             }
 
@@ -179,16 +184,16 @@ class FragmentoBuscarCliente : Fragment() {
         })
     }
 
-    fun EnableCliente(context: Context?, id:Long){
-        val call= clienteService!!.EnableCliente(id)
-        call!!.enqueue(object : Callback<Cliente?> {
-            override fun onResponse(call: Call<Cliente?>, response: Response<Cliente?>) {
+    fun EnableEmpleado(context: Context?, id:Long){
+        val call= empleadoService!!.EnableEmpleado(id)
+        call!!.enqueue(object : Callback<Empleado?> {
+            override fun onResponse(call: Call<Empleado?>, response: Response<Empleado?>) {
                 if(response.isSuccessful){
                     Log.e("mensaje","Se habilitó")
                 }
             }
 
-            override fun onFailure(call: Call<Cliente?>, t: Throwable) {
+            override fun onFailure(call: Call<Empleado?>, t: Throwable) {
                 Log.e("Error: ", t.message!!)
             }
 
@@ -230,4 +235,5 @@ class FragmentoBuscarCliente : Fragment() {
                 }
             }
     }
+
 }
